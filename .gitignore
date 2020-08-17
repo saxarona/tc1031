@@ -1,0 +1,5 @@
+*_minted*/
+*.vrb
+*.synctex.gz
+*.exe
+.vscode/
