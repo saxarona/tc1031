@@ -1,0 +1,125 @@
+\documentclass[spanish, 10pt]{article}
+
+\usepackage[table, xcdraw]{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish, mexico]{babel}
+\usepackage{helvet}
+\usepackage{fullpage}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{ulem}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage[margin = 3 cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+\usepackage{matlab-prettifier}
+\usepackage{multicol}
+
+\usetikzlibrary{arrows, shapes, trees, calc, decorations.pathreplacing, shapes.misc, positioning, automata}
+
+\setlength\parindent{0pt}
+
+\renewcommand{\familydefault}{\sfdefault}
+\newcommand{\responserule}{{\large\rule{14 cm}{0.3mm}}}
+\newcommand{\shortresponserule}{{\large\rule{5 cm}{0.3mm}}}
+\newcommand{\veryshortresponserule}{{\large\rule{3 cm}{0.3mm}}}
+\newcommand{\matlab}[1]{\lstinline[style=Matlab-pyglike]!#1!}
+
+
+% Specifications for listing package
+% \lstset{	
+%     basicstyle = \scriptsize\ttfamily,
+%     keywordstyle = \color{blue}\ttfamily,
+%     stringstyle = \color{red}\ttfamily,
+%    	commentstyle = \color{gray}\ttfamily,
+%    	tabsize = 3,
+%    	breaklines = true,
+%    	stepnumber = 1,
+%    	showtabs = false,
+%    	showstringspaces = false,
+%    	frame = none
+% }
+
+% Commands for true/false questions
+% ----------------------------------------------------------------
+\newcommand{\question}[1]{%
+	\noindent
+	\begin{minipage}[t]{0.15\linewidth}
+	\centering		
+		\textbf{[\hspace{1 cm}]}
+	\end{minipage}%
+	\begin{minipage}[t]{0.85\linewidth}
+		#1
+	\end{minipage}
+	\smallskip
+}
+% ----------------------------------------------------------------
+
+\setlength\parindent{0pt}
+
+\begin{document}
+
+\begin{center}
+    {\Large \textbf{Programación de Estructuras de Datos y Algoritmos Fundamentales \\ (TC1031)}}
+	
+	\bigskip
+	{\large \textbf{Actividad 01 -- Fibonacci \& Friends}}
+\end{center}
+
+\bigskip
+% {\large \textbf{Nombre}: \rule{13.7 cm}{0.4mm}}
+
+% \bigskip
+% {\large \textbf{Matrícula}: \rule{5 cm}{0.4mm}}
+
+% \bigskip
+% {\large \textbf{Name}: \rule{14 cm}{0.4mm}}
+
+\bigskip
+% {\large \textbf{Matrícula}: \rule{5 cm}{0.4mm}} \hfill {\large \textbf{Fecha}: \today}
+
+\bigskip
+
+% {\footnotesize Nota: es probable que esta actividad nos asuste un poco al principio. Es perfectamente normal.
+% En efecto, es de mayor dificultad a las que hemos visto anteriormente y probablemente haya dudas.
+% Si hay algo que no entiendas, no te quedes sin preguntar.}
+
+\section*{Recursión e Iteración}
+
+La serie de Fibonacci es una serie sobre los números naturales $\mathbb{N}$ que tiene la siguiente forma:
+\vspace{2.5ex}
+
+$$F = 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, \dots$$
+
+\vspace{2.5ex}
+
+\begin{enumerate}
+    \itemsep2.5ex
+    \item Implementa una función para encontrar el $n$-ésimo término de la serie de Fibonacci usando recursión y considera:
+    \begin{itemize}
+		\item ¿Cuántos casos base existen en esta serie?
+		\item ¿Cuál es o cuáles son?
+		\item ¿Cuál es la regla para generar el siguiente número de la serie?
+	\end{itemize}
+	\item Implementa una función para encontrar el $n$-ésimo término de la serie de Fibonacci usando iteración y considera:
+	\begin{itemize}
+		\item ¿Cuántas veces se repetirá el proceso?
+		\item ¿Cuál es el proceso que debe repetirse cada vez?
+		\item ¿En qué momento debo detenerme?
+	\end{itemize}
+\end{enumerate}
+
+\pagebreak
+
+\section*{Comandos}
+
+Si te sirve, puedes imprimir esta hoja y escribir los símbolos y comandos de C++ que consideres útiles para recordar lo visto en la sesión así como una descripción breve de cada uno de ellos:
+
+\vfill
+
+\textbf{Apegándome al Código de Ética de los Estudiantes del Tecnológico de Monterrey, me comprometo a que mi actuación en esta actividad esté regida por la honestidad académica.}
+
+\end{document}

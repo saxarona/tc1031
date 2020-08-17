@@ -1,0 +1,380 @@
+\documentclass[spanish, c]{beamer}
+
+\usepackage[utf8]{inputenc}
+%\usepackage[spanish, mexico]{babel}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage{ragged2e}
+\usepackage{mathrsfs}
+% \usepackage{csquotes}
+% \usepackage{listings}
+\usepackage[scaled]{beramono}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{physics}
+\usepackage{minted}
+\usepackage{relsize}
+
+\renewcommand{\indent}{\hspace*{2em}}
+
+\newcommand\CC{C\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\relsize{-3}{\textbf{++}}}}
+
+% \usepackage{tikz}
+
+% \usetikzlibrary{fit, shapes, arrows}
+
+% \usepackage{courier}
+% \usepackage{subfigure}
+% \usepackage{enumerate}
+% \usepackage{algorithmic}
+% \usepackage{algorithm}
+
+% \usepackage{listings}
+% \usepackage{lstlinebgrd}
+
+\usetheme{Boadilla}
+\usefonttheme[onlymath]{serif}
+
+\newcommand\blfootnote[1]{%
+\begingroup
+\renewcommand\thefootnote{}\footnote{#1}%
+\addtocounter{footnote}{-1}%
+\endgroup
+}
+
+% \lstset
+% {
+%     language = C++,
+%     basicstyle = \scriptsize,
+%     escapechar = `,
+%     numbers = left,
+%     frame = tb,
+% }
+
+% \lstdefinestyle{output}
+% {
+%     language = {},
+%     basicstyle = \scriptsize,
+%     escapechar = `,
+%     numbers = none,
+%     showtabs = false,
+%    	showstringspaces = false,
+% }
+
+% Sets the templates
+\definecolor{navyblue}{RGB}{0, 0, 128}
+\definecolor{crimson}{RGB}{128, 16, 0}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{headline}{}
+\setbeamertemplate{title page}[default][colsep=-4bp,rounded=true]
+\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{bibliography item}[text]
+\setbeamertemplate{theorems}[numbered]
+
+\setbeamercolor{title}{fg=navyblue, bg=white}
+\setbeamercolor{frametitle}{fg=navyblue, bg=white}
+\setbeamercolor{structure}{fg=navyblue}
+\setbeamercolor{button}{fg=white,bg=navyblue}
+
+\setbeamercovered{transparent}
+
+\title{\textit{Programming Primer}\\Datos, abstracción y matemáticas \texorpdfstring{\vspace{2.5ex}}{}}
+\subtitle{Programación de Estructuras de Datos y Algoritmos Fundamentales \\ (TC1031)}
+\author{
+    \texorpdfstring{
+        \begin{center}
+            M.C. Xavier Sánchez Díaz \\
+            \href{mailto:sax@tec.mx}{\texttt{sax@tec.mx}}
+        \end{center}
+    }
+    {M.C. Xavier Sánchez Díaz}
+}
+
+\institute[Tecnológico de Monterrey]{\includegraphics[scale=0.5]{../img/logo}}
+\date{}
+
+\begin{document}
+
+\setlength{\rightskip}{0pt}
+
+\begin{frame}[plain]
+    \titlepage        
+\end{frame}
+
+\begin{frame}{Outline}
+    \tableofcontents
+\end{frame}
+
+\section{Vocabulario}
+
+\begin{frame}{Términos comunes}{Conceptos básicos de programación}
+    \begin{columns}
+        \begin{column}{0.33\textwidth}
+            \begin{itemize}
+                \item Estatuto (\textit{Statement})
+                \item Función (\textit{Function})
+                \item Rutina (\textit{Routine})
+                \item Procedimiento (\textit{Procedure})
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.33\textwidth}
+            \begin{itemize}
+                \item Parámetro (\textit{Parameter})
+                \item Argumento (\textit{Argument})
+                \item Tipo (\textit{Type})
+                \item Retorno (\textit{Return})
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.3\textwidth}
+            \begin{itemize}
+                \item Estructura (\textit{Structure})
+                \item Arreglo (\textit{Array})
+                \item Objeto (\textit{Object})
+                \item Bucle (\textit{Loop})
+            \end{itemize}
+        \end{column}
+    \end{columns}
+    \begin{columns}
+        \begin{column}{0.33\textwidth}
+            \begin{itemize}
+                \item Condicional (\textit{Conditional})
+                \item Palabra reservada (\textit{Reserved keyword})
+                \item Archivo (\textit{File})
+                \item Directorio (\textit{Directory})
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.33\textwidth}
+            \begin{itemize}
+                \item Clase (\textit{Class})
+                \item Operador (\textit{Operator})
+                \item Iteración (\textit{Iteration})
+                \item Variable (\textit{Variable})
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.33\textwidth}
+            \begin{itemize}
+                \item Entero (\textit{Integer})
+                \item Punto Flotante (\textit{Floating-point})
+                \item Cadena de caracteres (\textit{String})
+                \item Imprimir (\textit{Print})
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\section{Datos}
+
+\begin{frame}{Datos como resultados}{Datos}
+    Antes de usar la computadora o la calculadora para hacer cálculos, solíamos hacer las operaciones a mano.
+
+    \bigskip
+    
+    Por ejemplo, si queremos calcular $1270 \times 35$, una manera de hacerlo podría ser\dots
+
+\end{frame}
+
+\begin{frame}{Datos como resultados}{Datos}
+    \begin{align*}
+        1270 \times 35 & = \\ \pause
+        & = (1200 + 70) \times (7)(5) \\ \pause
+        & = (\alert<4>{12})(\alert<5,6>{7})(\alert<4>{5})(\alert<7>{100}) + (\alert<8>{7})(\alert<8>{7})(\alert<10>{5})(\alert<9>{10}) \pause
+    \end{align*}
+    \vspace{-2ex}
+    \begin{align*}
+        \alert<4>{12} \times \alert<4>{5} = \alert<5,6>{60} \\
+        \alert<5,6>{60} \times \alert<5,6>{7} = \alert<6>{6} \times \alert<6>{7} \times \alert<6>{10} = \alert<7>{420} \\
+        \alert<7>{420} \times \alert<7>{100} = \alert<11>{42000} \\[1.5ex]
+        \alert<8>{7} \times \alert<8>{7} = \alert<9>{49} \\
+        \alert<9>{49} \times \alert<9>{10} = \alert<10>{490} \\
+        \alert<10>{490} \times \alert<10>{5} = \alert<10>{490} \times \alert<10>{10 / 2} = \alert<11>{2450}\\[1.5ex]
+        \alert<11>{42000} + \alert<11>{2450} = 44450 \quad \square
+    \end{align*}
+\end{frame}
+
+\begin{frame}{Datos como resultados}{Datos}    
+    La operación completa se hace poco a poco, y por tanto necesitamos ``recordar'' ciertos pasos intermedios que ya tenemos calculados. \pause
+
+    \bigskip
+    
+    Así como nosotros tenemos que tener en claro cuáles son esos pasos intermedios, la computadora debe saber \textit{dónde está} la información que tiene que leer para trabajar y hacer cálculos más elaborados. \pause
+
+    \bigskip
+
+    Para eso, podemos usar las estructuras de datos, para \textbf{ordenarlos} de manera conveniente y poder tener acceso a ellos de manera que se vayan necesitando.
+
+\end{frame}
+
+\begin{frame}{Datos y errores}{Datos}
+    ¿Qué habría pasado si hubiera muchos puntos decimales de por medio? \pause
+
+    \bigskip
+
+    ¿Cuál es la representación decimal de $\dfrac{1}{7}$? ¿Y de $\dfrac{2}{7}$? \pause
+
+    \bigskip
+
+    \begin{center}
+        \LARGE
+        \textit{Story time: The Wolf}
+    \end{center}    
+\end{frame}
+
+\begin{frame}{Tipos de datos}{Datos}
+    
+    Existen distintos \alert{tipos de datos} con los que podemos trabajar en una computadora: \pause
+ 
+     \bigskip
+ 
+     \begin{itemize}[<+->]
+         \item Números enteros (\textit{integer numbers})
+         \item Números decimales (\textit{floating point numbers})
+         \item Cadenas de caracteres alfanuméricos (\textit{strings})
+         \item Datos estructurados definidos por nosotros mismos
+     \end{itemize} \pause
+ 
+     \bigskip
+ 
+     Cuando \textbf{operamos} con estos datos, generamos nueva información que podríamos necesitar en el futuro.
+ 
+ \end{frame}
+
+\section{Abstracción de datos}
+
+\begin{frame}{¿Qué es un dato abstracto?}{Abstracción de datos}
+    \begin{center}
+        \huge
+     Un \alert{dato abstracto} es una manera \textit{fancy} de decirle a una \textbf{estructura de datos} definida por el usuario.
+    \end{center}
+\end{frame}
+
+\begin{frame}{Arreglos}{Abstracción de datos}
+    Asumamos que quiero saber las calificaciones de las Tareas 1, 2 y 3 de uno de mis alumnos.
+    Para esto, necesitaría un lugar para guardar esos \textbf{3 datos}: \pause
+
+    \bigskip
+
+    \begin{itemize}[<+->]
+        \item $t_1 = 90$ será la variable para la Tarea 1
+        \item $t_2 = 75$ será la variable para la Tarea 2
+        \item $t_3 = 87$ será la variable para la Tarea 3
+    \end{itemize}
+
+    \bigskip
+
+    Con esta información, ahora contesta: \pause
+
+    \begin{itemize}[<+->]
+        \item ¿Cuál fue la calificación para la Tarea 2?
+        \item ¿Cuál fue el promedio del alumno?
+        \item ¿Cuál es la tarea en la que mejor le fue?
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Arreglos}{Abstracción de Datos}
+    La pregunta ahora es\dots ¿realmente necesito \textbf{3 variables} para guardar \textbf{3 datos}?
+    Podemos \textit{arreglar} los datos de tal manera que \textbf{su posición} nos aporte algo más: \pause
+
+    $$\mathbf{t} = \langle 90, 75, 87 \rangle$$ \pause
+
+    La \textbf{posición} en esta \textit{estructura} nos indica qué número de tarea fue, y el valor que haya en dicha posición guarda la calificación. Por lo mismo, podemos usar ``una sola variable'' para guardar de manera estructurada la información requerida, y referirnos sólo a la posición deseada:
+
+    $$\mathbf{t}_2 = 75$$
+\end{frame}
+
+\begin{frame}{Abstracción}{Abstracción de Datos}
+
+    \begin{center}
+        \LARGE
+        \textit{Story time: La Torre Eiffel}
+    \end{center} \pause
+
+    \begin{center}
+        \LARGE
+        \textit{Story time: La presentación del equipo 5}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Niveles de abstracción}{Abstracción de Datos}
+    Independientemente de la \textit{estructura} de nuestros datos, a nivel abstracto siempre trabajamos con un \alert{objeto}.\blfootnote{Fun fact: cambia el sustantivo ``objeto'' por \textit{cosa {\tiny(o madre)}} para todo en esta slide y seguro lo recuerdas mejor} \pause
+    \
+    \bigskip
+
+    \begin{itemize}[<+->]
+        \item Este \textbf<5->{objeto} tiene varias \textbf<5->{cosas}.
+        \item Este \textbf<5->{objeto} me sirve para \textbf<5->{otra cosa}.
+        \item Este \textbf<5->{objeto} puedo usarlo de \textbf<5->{esta manera}.
+    \end{itemize}
+
+    \pause
+
+    \bigskip
+
+    Esto es \alert{abstracción}.
+\end{frame}
+
+\begin{frame}{Niveles de abstracción}{Abstracción de Datos}
+    
+    \begin{itemize}[<+->]
+        \itemsep2.5ex
+        \item Una \alert{clase} es un \textit{tipo} de \textbf{objeto}
+        \item Una \textbf{clase} tiene \alert{atributos}
+        \item Una \textbf{clase} tiene \textit{operaciones} que puede realizar sobre sus \textbf{atributos}. Estas operaciones son \alert{funciones} específicamente de la clase
+        \item A estas \textbf{funciones} de la clase se les llama \alert{métodos}
+        \item Tanto los \textbf{métodos} como los \textbf{atributos} pueden ser \alert{privados} o \alert{públicos} dependiendo quién deba tener acceso a esa información.
+    \end{itemize}
+\end{frame}
+
+\section{Vocabulario avanzado}
+
+\begin{frame}{Términos comunes}{Conceptos básicos de programación orientada a objetos}
+    \begin{columns}
+        \begin{column}{0.33\textwidth}
+            \begin{itemize}
+                \item Clase (\textit{Class})
+                \item Objeto (\textit{Object})
+                \item Clase abstracta (\textit{Abstract Class})
+                \item Interfaz (\textit{Interface})
+                \item Instancia (\textit{Instance})
+                \item Atributo (\textit{Attribute})
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.33\textwidth}
+            \begin{itemize}
+                \item Método (\textit{Method})
+                \item Plantilla o Templete (\textit{Template})
+                \item Encapsulación (\textit{Encapsulation})
+                \item Polimorfismo (\textit{Polymorphism})
+                \item Herencia (\textit{Inheritance})
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.3\textwidth}
+            \begin{itemize}
+                \item Cohesión (\textit{Cohesion})
+                \item Acoplamiento (\textit{Coupling})
+                \item \textit{DRY}
+                \item \textit{A function should do one thing}
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Ejemplo en \texorpdfstring{\protect\CC}{C++}}{Pa' recordarlo\dots}
+    \inputminted[linenos, breaklines, fontsize=\scriptsize]{c++}{../../hello.cpp}
+\end{frame}
+
+% \section*{Referencias}
+
+% \begin{frame}[t]{Referencias}
+    % \nocite{bibID01}
+    % \nocite{bibID02}
+
+    % \bibliographystyle{IEEE}
+    % \bibliography{biblio}
+% \end{frame}
+
+\end{document}

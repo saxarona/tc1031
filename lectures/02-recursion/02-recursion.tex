@@ -1,0 +1,291 @@
+\documentclass[spanish, c]{beamer}
+
+\usepackage[utf8]{inputenc}
+%\usepackage[spanish, mexico]{babel}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage{ragged2e}
+\usepackage{mathrsfs}
+% \usepackage{csquotes}
+% \usepackage{listings}
+\usepackage[scaled]{beramono}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{physics}
+\usepackage{minted}
+\usepackage{tcolorbox}
+\usepackage{tikz}
+\usepackage{relsize}
+
+\tcbuselibrary{minted, skins}
+
+\renewcommand{\indent}{\hspace*{2em}}
+
+\newcommand\CC{C\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\relsize{-3}{\textbf{++}}}~}
+% \usepackage{tikz}
+
+% \usetikzlibrary{fit, shapes, arrows}
+
+% \usepackage{courier}
+% \usepackage{subfigure}
+% \usepackage{enumerate}
+% \usepackage{algorithmic}
+% \usepackage{algorithm}
+
+% \usepackage{listings}
+% \usepackage{lstlinebgrd}
+
+\usetheme{Boadilla}
+\usefonttheme[onlymath]{serif}
+
+\newcommand\blfootnote[1]{%
+\begingroup
+\renewcommand\thefootnote{}\footnote{#1}%
+\addtocounter{footnote}{-1}%
+\endgroup
+}
+
+% \lstset
+% {
+%     language = C++,
+%     basicstyle = \scriptsize,
+%     escapechar = `,
+%     numbers = left,
+%     frame = tb,
+% }
+
+% \lstdefinestyle{output}
+% {
+%     language = {},
+%     basicstyle = \scriptsize,
+%     escapechar = `,
+%     numbers = none,
+%     showtabs = false,
+%    	showstringspaces = false,
+% }
+
+% Sets the templates
+\definecolor{navyblue}{RGB}{0, 0, 128}
+\definecolor{crimson}{RGB}{128, 16, 0}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{headline}{}
+\setbeamertemplate{title page}[default][colsep=-4bp,rounded=true]
+\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{bibliography item}[text]
+\setbeamertemplate{theorems}[numbered]
+
+\setbeamercolor{title}{fg=navyblue, bg=white}
+\setbeamercolor{frametitle}{fg=navyblue, bg=white}
+\setbeamercolor{structure}{fg=navyblue}
+\setbeamercolor{button}{fg=white,bg=navyblue}
+
+\setbeamercovered{transparent}
+
+\tcbset{cppexample/.style={%
+    colback=green!5,
+    colframe=green!30!black,
+    listing only,
+    fonttitle=\bfseries,
+    listing engine=minted,
+    minted language=c++,
+    minted options={fontsize=\scriptsize, breaklines, linenos, autogobble, numbersep=2mm},
+    enhanced,
+    overlay={\begin{tcbclipinterior}\fill[red!25!green!25!white] (frame.south west)rectangle ([xshift=4mm]frame.north west);\end{tcbclipinterior}}
+}}
+
+\tcbset{cppfullexample/.style={%
+    % colback=green!5,
+    % colframe=green!30!black,
+    listing only,
+    fonttitle=\bfseries,
+    listing engine=minted,
+    minted language=c++,
+    minted options={fontsize=\scriptsize, breaklines, linenos, autogobble, numbersep=2mm},
+    enhanced,
+    overlay={\begin{tcbclipinterior}\fill[black!20!white] (frame.south west)rectangle ([xshift=4mm]frame.north west);\end{tcbclipinterior}}
+}}
+
+\tcbset{cppfullborderless/.style={%
+    % colback=green!5,
+    % colframe=green!30!black,
+    listing only,
+    listing engine=minted,
+    minted language=c++,
+    minted options={fontsize=\scriptsize, breaklines, linenos, autogobble, numbersep=2mm},
+    enhanced,
+    overlay={\begin{tcbclipinterior}\fill[black!20!white] (frame.south west)rectangle ([xshift=4mm]frame.north west);\end{tcbclipinterior}}
+}}
+
+\title{\textit{Programming Primer II}\\Templates, Iteración y Recursión \texorpdfstring{\vspace{2.5ex}}{}}
+\subtitle{Programación de Estructuras de Datos y Algoritmos Fundamentales \\ (TC1031)}
+\author{
+    \texorpdfstring{
+        \begin{center}
+            M.C. Xavier Sánchez Díaz \\
+            \href{mailto:sax@tec.mx}{\texttt{sax@tec.mx}}
+        \end{center}
+    }
+    {M.C. Xavier Sánchez Díaz}
+}
+
+\institute[Tecnológico de Monterrey]{\includegraphics[scale=0.5]{../img/logo}}
+\date{}
+
+\begin{document}
+
+\setlength{\rightskip}{0pt}
+
+\begin{frame}[plain]
+    \titlepage        
+\end{frame}
+
+\begin{frame}{Outline}
+    \tableofcontents
+\end{frame}
+
+\section{Templates}
+
+\begin{frame}[fragile]{Data Types en \CC}{Templates}
+    \CC es un lenguaje \textit{fuertemente tipado}---funciones, objetos y estructuras deben tener un tipo de dato asociado al compilar y es el único tipo de datos que aceptarán.
+
+    \bigskip
+
+    \begin{tcblisting}{cppexample, title={Boolean return with integer parameters}}
+        bool greaterThanInt(int a, int b){
+            bool g = false;
+            if (a > b){
+                g =  true;
+            }
+            return g;
+        }
+    \end{tcblisting}
+
+\end{frame}
+
+\newtcbinputlisting{\fullExampleA}[2][]{%
+    listing file={#2},
+    cppfullexample,
+    title={Boolean return with double precision floating-point params}
+}
+
+\begin{frame}[fragile, plain]{Data Types en \CC}{Templates}
+    \fullExampleA[before upper=\textit{File contents:}]{approxEqual.cpp}
+\end{frame}
+
+\begin{frame}[fragile, allowframebreaks]{Templates en \CC}{Templates}
+    Podemos convertir una \textit{función tipada} en un \alert{\textit{template}} para poder usar múltiples tipos de datos al incluir el decorador \mintinline{c++}{template <class mytype>} justo arriba de una \textbf{clase} o \textbf{función} para hacerla \textit{genérica}:
+    \vspace{2ex}
+    \begin{tcblisting}{cppexample, title={Defining a template}, before upper=\scriptsize\texttt{Lista.h}}
+        #define MAX 100
+        template <class T>
+        class Lista
+        {
+        private:
+            T data[MAX];
+            int size;
+        public:
+            Lista();
+        ...
+    \end{tcblisting}
+
+    Después, durante la implementación, especificamos el tipo de dato específico a utilizar, por ejemplo:
+    
+    \bigskip
+
+    \begin{tcblisting}{cppexample, title={Implementing a template}, before upper=\scriptsize\texttt{miLista.cpp}}
+        #include "Lista.h"
+        int main(){
+            Lista<float> miLista;
+            ...
+    \end{tcblisting}
+
+    para implementar una lista que guarde solamente números decimales.
+\end{frame}
+
+\section{Patrones de diseño de algoritmos}
+
+\begin{frame}{Patrones de diseño}{Iteración}
+    
+    En el ámbito de software, llamamos \alert{patrones de diseño} a la manera en la que se `resuelve' un problema. Existen muchos patrones de diseño para algoritmos, pero en el curso revisaremos dos enfoques importantes: \pause
+
+    \bigskip
+
+    \begin{itemize}
+        \item \textbf{Métodos Iterativos}. Se usan para recorrer contenedores con estructuras indizables. \pause
+        \item \textbf{Métodos Recursivos}. Se usan para recorrer o generar contenedores con estructuras recursivas \pause
+    \end{itemize}
+    
+    \bigskip
+
+    Cada uno tiene sus propiedades y tienen fundamentos matemáticos distintos.
+\end{frame}
+
+\begin{frame}{Iteración}{Patrones de diseño de algoritmos}
+    La \alert{iteración} está basada en las \textbf{estructuras matemáticas ordenadas} como las tuplas, las cadenas de caracteres y los arreglos $n$-dimensionales. \pause
+
+    \bigskip
+
+    $$\langle \alert<4>{1}, \alert<5>{2}, \alert<6>3, \dots \rangle$$ \pause
+
+    $$\begin{bmatrix}
+        \alert<7>{2} & \alert<8>{4} \\
+        \alert<9>{8} & \alert<10>{16} \\
+        \alert<11>{32} & \alert<12>{64}
+    \end{bmatrix}$$
+
+\end{frame}
+
+\begin{frame}{Recursión}{Patrones de diseño de algoritmos}
+    La \alert{recursión} es una propiedad estructural de algunos objetos matemáticos (como los números naturales $\mathbb{N}$) que se puede simplificar en dos pasos: \pause
+
+    \begin{enumerate}
+        \item Existe un caso base \pause
+        \item Existe una regla general basada en el caso anterior para todos los siguientes casos \pause
+    \end{enumerate}
+
+    \begin{exampleblock}{Inducción en $\mathbb{N}$}
+        \begin{itemize}
+            \item \textbf{Caso base:} 1 \pause
+            \item \textbf{Regla general:} sumar 1 al número anterior \pause
+        \end{itemize}
+
+        Con esto podemos generar \textbf{todos} los números naturales ($1, 2, 3, 4, \dots$):
+
+        \[{\color{blue} 1}, ({\color{blue} 1}) + {\color{cyan} 1}, (({\color{blue}1}) + {\color{cyan}1}) + {\color{magenta}1}, ((({\color{blue}1}) + {\color{cyan}1}) + {\color{magenta}1}) + 1, \dots\]
+    \end{exampleblock}
+\end{frame}
+
+\newtcbinputlisting{\fullExampleB}[2][]{%
+    listing file={#2},
+    cppfullborderless
+}
+
+\newtcbinputlisting{\fullExampleC}[2][]{%
+    listing file={#2},
+    cppfullborderless
+}
+
+\begin{frame}[fragile, plain]{Factorial}{Iteración}
+    \fullExampleB[before upper=\textit{File contents:}]{factorialIter.cpp}
+\end{frame}
+
+\begin{frame}[fragile, plain]{Factorial}{Recursión}
+    \fullExampleC[before upper=\textit{File contents:}]{factorialRecur.cpp}
+\end{frame}
+
+% \section*{Referencias}
+
+% \begin{frame}[t]{Referencias}
+    % \nocite{bibID01}
+    % \nocite{bibID02}
+
+    % \bibliographystyle{IEEE}
+    % \bibliography{biblio}
+% \end{frame}
+
+\end{document}
