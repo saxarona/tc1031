@@ -1,0 +1,227 @@
+\documentclass[12pt, letterpaper, oneside]{article}
+%\usepackage{geometry}
+\usepackage[spanish, mexico]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage[inner=1.5cm,outer=1.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+\pagestyle{empty}
+\usepackage{graphicx}
+\usepackage{fancyhdr, lastpage, bbding, pmboxdraw}
+\usepackage[usenames,dvipsnames]{color}
+\definecolor{darkblue}{rgb}{0,0,.6}
+\definecolor{darkred}{rgb}{.7,0,0}
+\definecolor{darkgreen}{rgb}{0,.6,0}
+\definecolor{red}{rgb}{.98,0,0}
+\usepackage[colorlinks,pagebackref,pdfusetitle,urlcolor=darkblue,citecolor=darkblue,linkcolor=darkred,bookmarksnumbered,plainpages=false]{hyperref}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\thecourse}{Programación de Estructuras de Datos y Algoritmos Fundamentales (TC1031--9)}
+\newcommand{\thesemester}{Agosto--Diciembre 2020}
+\newcommand{\theinstructor}{Xavier Sánchez Díaz}
+\newcommand{\themail}{sax@tec.mx}
+\newcommand{\thetime}{Lu Ju 11:00--13:00 hr}
+\newcommand{\theplace}{Zoom Meetings}
+
+\newcommand{\topic}{{\color{darkgreen}{\Rectangle}}}
+\newcommand{\subtopic}{{\enskip \color{darkblue}{\Rectangle}}}
+
+\setlength{\headheight}{14.5pt}
+
+\pagestyle{fancyplain}
+\fancyhf{}
+\lhead{ \fancyplain{}{\thecourse} }
+%\chead{ \fancyplain{}{} }
+\rhead{ \fancyplain{}{\thesemester} }
+%\rfoot{\fancyplain{}{page \thepage\ of \pageref{LastPage}}}
+\fancyfoot[RO] {Página \thepage\ de \pageref{LastPage}}
+\thispagestyle{plain}
+
+%%%%%%%%%%%% LISTING %%%
+\usepackage{listings}
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+% \captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+\usepackage{verbatim} % used to display code
+\usepackage{fancyvrb}
+\usepackage{acronym}
+\usepackage{amsthm}
+\VerbatimFootnotes % Required, otherwise verbatim does not work in footnotes!
+
+
+
+\definecolor{OliveGreen}{cmyk}{0.64,0,0.95,0.40}
+\definecolor{CadetBlue}{cmyk}{0.62,0.57,0.23,0}
+\definecolor{lightlightgray}{gray}{0.93}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+  \begin{center}
+  {\Large \textsc{\thecourse}}
+  \end{center}
+  \begin{center}
+  \thesemester
+  \end{center}
+
+  \begin{center}
+  \rule{6in}{0.4pt}
+  \begin{minipage}[t]{.8\textwidth}
+  \begin{tabular}{llcccll}
+  \textbf{Instructor:} & \theinstructor & & &  & \textbf{Hora:} & \thetime \\
+  \textbf{Email:} &  \href{mailto:sax@tec.mx}{\themail} & & & & \textbf{Lugar:} & \theplace
+  \end{tabular}
+  \end{minipage}
+  \rule{6in}{0.4pt}
+  \end{center}
+  \vspace{.5cm}
+  \setlength{\unitlength}{1in}
+  \renewcommand{\arraystretch}{2}
+
+  \noindent\textbf{Página del curso:}
+  
+  \begin{enumerate}
+  \item \url{https://saxarona.gitlab.io/teaching/tc1031}
+  \end{enumerate}
+
+  \vskip.15in
+
+  \noindent\textbf{Horario de oficina:}
+  Envía un correo para agendar una cita. Los horarios de asesoría son usualmente los días lunes de 16:00 a 17:30 h, y los miércoles y viernes de 10:00 a 12:30 y de 15:00 a 18:00 h.
+  Todos los horarios son en TCM (Tiempo del Centro de México).
+
+  \vskip.15in
+
+  \noindent\textbf{Material recomendado:} % \footnotemark
+  Ésta es una lista de recursos que pueden serte de utilidad durante el curso.
+
+  \begin{itemize}
+    \item \textit{C++ Notes for Professionals} es un libro de texto de libre distribución compilando conocimiento de expertos de StackOverflow. Disponible \href{https://books.goalkicker.com/CPlusPlusBook/}{aquí}.
+    \item C. A. Shaffer, \textit{Data Structures}, Blacksburg, VA: Virginia Tech, 2013. Disponible \href{http://people.cs.vt.edu/\textasciitilde shaffer/Book/C++3elatest.pdf}{aquí}.
+    \item V.M. de la Cueva Hernández, L. H. González Guerra y E. G. Salinas Gurrión, \textit{Estructura de datos y algoritmos fundamentales}, Monterrey, Mexico: Editorial Digital del Tecnológico de Monterrey, 2020. Disponible en \href{https://www.amazon.com.mx/Estructura-datos-y-algoritmos-fundamentales-ebook/dp/B08FBJ9YFM}{Amazon}, \href{https://play.google.com/store/books/details?id=MXf1DwAAQBAJ}{Google Play} y \href{https://books.apple.com/mx/book/estructura-de-datos-y-algoritmos-fundamentales/id1526478309}{Apple Books}.
+  \end{itemize} 
+
+  \vskip.15in
+
+  \noindent\textbf{Objetivos:}
+  Al final del curso, el alumno:
+
+  \begin{itemize}
+    \item Será capaz de demostrar el funcionamiento de los procesos computacionales y de las tecnologías de la información mediante evidencias empíricas obtenidas de diversas metodologías de investigación y de cómputo.
+    \item Podrá evaluar los componentes que integran una problemática de acuerdo a principios procesos computacionales.
+    \item Tomará decisiones en la solución de problemas en condiciones de incertidumbre y diferentes niveles de complejidad con base en metodologías de investigación y de cómputo.
+    \item Implementará acciones científicas e ingenieriles o procesos computacionales que cumplan con el tipo de solución requerida.
+  \end{itemize}
+
+  \vskip.15in
+  \noindent\textbf{Requisitos:}
+  Haber cursado Programación orientada a objetos (TC1030).
+
+  % \vspace*{.15in}
+  \pagebreak
+  \noindent \textbf{Índice analítico del curso:}
+  El curso está dividido en varios módulos:
+
+  \begin{center} 
+  \begin{minipage}{5in}
+  \begin{flushleft}
+  {\large I. Conceptos básicos y algoritmos fundamentales} \\[2ex]
+  \topic ~Abstracción de datos \\
+  \subtopic ~Tipos de datos \\
+  \subtopic ~Niveles de abstracción \\
+  \subtopic ~Templates \\
+  \topic ~Recursión e Iteración \\
+  \topic ~Análisis de complejidad \\
+  \subtopic ~Notación asintótica \\
+  \subtopic ~Clasificación $\mathcal{P}$ y $\mathcal{NP}$ \\
+  \topic ~Algoritmos de búsqueda \\
+  \subtopic ~Búsqueda secuencial \\
+  \subtopic ~Búsqueda binaria \\
+  \topic ~Algoritmos de Ordenamiento \\
+  \subtopic ~Bubble \\
+  \subtopic ~Selection \\
+  \subtopic ~Insertion \\
+  \subtopic ~Quicksort \\
+  \subtopic ~Mergesort \\
+  \topic ~Memoria \\
+  \subtopic ~Apuntadores y referencias \\[2.5ex]
+  {\large II. Estructuras de Datos} \\[2ex]
+  \topic ~Estructuras de datos lineales \\
+  \subtopic ~Listas encadenadas \\
+  \subtopic ~Pilas \\
+  \subtopic ~Filas \\
+  \topic ~Estructuras de datos no lineales \\
+  \subtopic ~Árboles \\
+  \subtopic ~Heap \\
+  \subtopic ~Grafos \\
+  \subtopic ~Conjuntos
+
+  \end{flushleft}
+  \end{minipage}
+  \end{center}
+
+  \vspace*{.15in}
+  \noindent\textbf{Política de evaluación:}
+  Tareas formativas (30\%), Tareas con evidencia de competencia (70\%).
+  \vspace*{.15in}
+  % La suma será posteriormente multiplicada por 95\% debido a que el 5\% restante corresponde a la Semana i.
+
+  \noindent\textbf{Recuerda que lo que se evalúa es tu desempeño, no tu persona}.
+  En los exámenes, evaluamos lo que escribes, no lo que piensas ni lo que sabes.
+  Las evaluaciones---a pesar de sus limitaciones---son un elemento básico para que la institución pueda certificar, al final de tu carrera, que asististe a los cursos y que posees los conocimientos, habilidades, actitudes y valores de un profesionista.
+
+  % \vskip.15in
+  % \noindent\textbf{Fechas importantes:}
+  % Esta materia no tiene exámenes.
+  % Sin embargo, es importante que recuerdes cuándo son nuestr:
+
+  % \begin{center} \begin{minipage}{3.8in}
+  % \begin{flushleft}
+  % Examen 1 \dotfill ~21 de septiembre \\
+  % % Semana \textit{i} \dotfill ~18 al 24 de septiembre\\
+  % Examen 2 \dotfill ~02 de noviembre \\
+  % Examen final \dotfill ~30 de noviembre
+  % \end{flushleft}
+  % \end{minipage}
+  % \end{center}
+  \pagebreak
+  % \vskip.15in
+  \noindent\textbf{Políticas del curso:}  
+  \begin{itemize}
+  \item Se sugiere que al inicio del semestre navegues por la página del curso, el curso en Canvas y que revises los contenidos, su forma de evaluación y las reglas. \textbf{El desconocimiento de una regla que fue dada a conocer no justifica su omisión}.
+  \item Verifica que tu correo del Tec esté funcionando, ya que será utilizado como medio oficial de comunicación. \textbf{El hecho de que no tengas acceso a tu correo no es justificación para no llevar a cabo una entrega}.
+  \item Las tareas serán entregadas por el medio especificado y antes de la fecha límite. En caso de que no puedas entregar una tarea a tiempo, es probable que puedas entregarla de otro modo aunque con una penalización. Acércate al profesor.
+  \item En caso de las tareas que contribuyen a las \textbf{evidencias}, la fecha de entrega no se podrá posponer salvo en condiciones excepcionales y por fuerzas de causa mayor.
+  \item Las soluciones a las tareas deberán ser entregadas en limpio y en el formato especificado. Si son de texto, un archivo \textit{typeset} (nativamente digital, hecho en \textit{Word} o \LaTeX), en un archivo PDF y subidas a la plataforma. Si son de programación, archivos \texttt{.cpp} y \texttt{.h}. Evita subir fotos o escaneos de trabajos a mano o screenshots de tu código.
+  \item Para tareas en las que la solución sea de más de un archivo, sube una carpeta comprimida en formato ZIP. 
+  % \item Las soluciones a las tareas con un puntaje casi perfecto podrían ser consideradas como soluciones oficiales de dicha tarea y subidas a la plataforma. En caso de ser así, el estudiante ganará puntos extras.
+  \item Si hay algo que crees necesario que deba tomar en cuenta al momento de calificar tu tarea, escríbelo en los comentarios de la plataforma, o bien crea un archivo de texto con el nombre \texttt{README} y escribe ahí tu mensaje e inclúyelo en el archivo comprimido. No envíes estos mensajes por correo.
+  \item Puedes discutir los problemas de la tarea con otros estudiantes, pero recuerda que debes subir un archivo escrito por ti (y los miembros de tu equipo, según sea el caso). En trabajos colaborativos, un solo entregable basta, pero asegúrate de incluir a todos los integrantes.
+  \item Las aclaraciones de los alumnos respecto a calificaciones de actividades y exámenes sólo podrán hacerse dentro de las dos semanas siguientes a la publicación de las calificaciones respectivas.
+  \item Los comentarios o aclaraciones que haga el profesor durante la aplicación de un examen son usados por el alumno bajo su propia responsabilidad, si considera que le son de utilidad, y en ningún momento podrán usarse como argumento para discutir la calificación de algún problema del examen.
+  \item En caso de que un alumno no pueda presentar un examen por causas de fuerza mayor, deberá conseguir un visto bueno de la dirección de carrera, quien mandará un correo u otro documento equivalente al profesor. El profesor no revisará directamente comprobantes médicos o documentos de esa índole.
+  \end{itemize}
+
+  % \vskip.15in
+  \pagebreak
+  \noindent\textbf{Políticas de las sesiones en línea:}  
+  \begin{itemize}
+  \item La entrada a la reunión de ZOOM es a la hora especificada. Una vez iniciada la clase, se procederá a tomar asistencia.
+  \item Las actividades desarrolladas durante una sesión a la que no asististe no se repondrán.
+  \item Los exámenes podrán reponerse con el visto bueno del director de carrera, quien deberá enviar una notificación al profesor (un correo, por ejemplo).
+  \item Es tu responsabilidad ponerte al tanto de lo acontecido en la clase durante tu ausencia.
+  \item No faltes a clase si no es absolutamente necesario, pues solemos ir bastante rápido en este curso.
+  \item Sé cortés durante la sesión. Se recomienda que prendas tu cámara y silencies el micrófono al entrar. En las discusiones, tomaremos turnos para participar. Asegúrate de que tu celular está en silencio si tu micrófono está abierto. Si recibes una llamada o mensaje importante durante una sesión, podrás atenderlo sin problemas pero asegúrate de que el micrófono está desactivado.\footnotemark
+  \end{itemize}
+
+  \footnotetext{El problema principal no es que tú no te concentres, sino que podrías perjudicar al ambiente en que se desenvuelven tus demás compañeros. Sé considerado.}
+
+  \vskip.15in
+  \noindent\textbf{Integridad académica:}
+  ``Se entiende por \textit{integridad académica} el actuar honesto, comprometido, confiable, responsable, justo, respetuoso con el aprendizaje, la investigación y la difusión de la cultura''. En este curso, pedimos que los alumnos y el profesor se comporten siguiendo estos principios.
+  \\[2ex]
+  {\color{darkred}{\Large \HandRight}} ~\textbf{La copia en exámenes o tareas va en forma flagrante contra dicha \textit{integridad académica}, y será penalizada}.
+  Una cosa es \textit{hacer la tarea juntos} y otra muy distinta es compartir resultados y documentos sin hacer referencia formal de ello.\\[2ex]
+  {\color{darkred}{\Large \HandRight}} ~El nuevo reglamento académico establece que el profesor asignará una \textbf{calificación reprobatoria} a la actividad, examen, período parcial o final. \textbf{La calificación reprobatoria asignada por el profesor será inapelable}, y a esta sanción se sumarán aquellas otras que el Comité de Integridad Académica del Campus determine pertinentes.
+
+  %%%%%% END 
+\end{document} 
