@@ -1,0 +1,114 @@
+\documentclass[spanish, 10pt]{article}
+
+\usepackage[table, xcdraw]{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish, mexico]{babel}
+\usepackage{helvet}
+\usepackage{fullpage}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{ulem}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage[margin = 3 cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+\usepackage{matlab-prettifier}
+\usepackage{multicol}
+
+\usetikzlibrary{arrows, shapes, trees, calc, decorations.pathreplacing, shapes.misc, positioning, automata}
+
+\setlength\parindent{0pt}
+
+\renewcommand{\familydefault}{\sfdefault}
+\newcommand{\responserule}{{\large\rule{14 cm}{0.3mm}}}
+\newcommand{\shortresponserule}{{\large\rule{5 cm}{0.3mm}}}
+\newcommand{\veryshortresponserule}{{\large\rule{3 cm}{0.3mm}}}
+\newcommand{\matlab}[1]{\lstinline[style=Matlab-pyglike]!#1!}
+
+
+% Specifications for listing package
+% \lstset{	
+%     basicstyle = \scriptsize\ttfamily,
+%     keywordstyle = \color{blue}\ttfamily,
+%     stringstyle = \color{red}\ttfamily,
+%    	commentstyle = \color{gray}\ttfamily,
+%    	tabsize = 3,
+%    	breaklines = true,
+%    	stepnumber = 1,
+%    	showtabs = false,
+%    	showstringspaces = false,
+%    	frame = none
+% }
+
+% Commands for true/false questions
+% ----------------------------------------------------------------
+\newcommand{\question}[1]{%
+	\noindent
+	\begin{minipage}[t]{0.15\linewidth}
+	\centering		
+		\textbf{[\hspace{1 cm}]}
+	\end{minipage}%
+	\begin{minipage}[t]{0.85\linewidth}
+		#1
+	\end{minipage}
+	\smallskip
+}
+% ----------------------------------------------------------------
+
+\setlength\parindent{0pt}
+
+\begin{document}
+
+\begin{center}
+    {\Large \textbf{Programación de Estructuras de Datos y Algoritmos Fundamentales \\ (TC1031)}}
+	
+	\bigskip
+	{\large \textbf{Actividad 02 -- Análisis de algoritmos I}}
+\end{center}
+
+\bigskip
+% {\large \textbf{Nombre}: \rule{13.7 cm}{0.4mm}}
+
+% \bigskip
+% {\large \textbf{Matrícula}: \rule{5 cm}{0.4mm}}
+
+% \bigskip
+% {\large \textbf{Name}: \rule{14 cm}{0.4mm}}
+
+\bigskip
+% {\large \textbf{Matrícula}: \rule{5 cm}{0.4mm}} \hfill {\large \textbf{Fecha}: \today}
+
+\bigskip
+
+% {\footnotesize Nota: es probable que esta actividad nos asuste un poco al principio. Es perfectamente normal.
+% En efecto, es de mayor dificultad a las que hemos visto anteriormente y probablemente haya dudas.
+% Si hay algo que no entiendas, no te quedes sin preguntar.}
+
+\section*{Iteración}
+
+Considera una función \texttt{pueblo(n)} que imprime $n$ veces el mensaje ``Hola pueblo'' usando un \textbf{for}.
+Con esta información, responde a las siguientes preguntas:
+
+\begin{itemize}
+	\item ¿Cuántas operaciones \textit{exactamente} hace la función si la llamo con \texttt{pueblo(15)}?
+	\item ¿Cuántas operaciones \textit{exactamente} hace la función si la llamo con \texttt{pueblo(7)}?
+	\item ¿Puedes hacer una función para definir su complejidad? Si sí, escríbela.
+	\item En caso de que pudieras hallar una función, ¿en qué \textbf{orden} de magnitud común está? Escribe tu respuesta usando $\mathcal{O}, \Theta$ y $\Omega$.
+\end{itemize}
+
+\vspace{1.5cm}
+
+% \pagebreak
+
+\section*{Comandos}
+
+Si te sirve, puedes imprimir esta hoja y escribir los símbolos y comandos de C++ que consideres útiles para recordar lo visto en la sesión así como una descripción breve de cada uno de ellos:
+
+\vfill
+
+\textbf{Apegándome al Código de Ética de los Estudiantes del Tecnológico de Monterrey, me comprometo a que mi actuación en esta actividad esté regida por la honestidad académica.}
+
+\end{document}

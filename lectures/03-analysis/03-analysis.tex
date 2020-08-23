@@ -1,7 +1,7 @@
 \documentclass[spanish, c]{beamer}
 
 \usepackage[utf8]{inputenc}
-\usepackage[spanish, mexico]{babel}
+% \usepackage[spanish, mexico]{babel}
 \usepackage{amsmath}
 \usepackage{mathtools}
 \usepackage{hyperref}
@@ -284,6 +284,249 @@ Podemos usar la misma idea para expresar también su \textbf{complejidad espacia
         \item $\bigO(m^n)$ que es \textit{exponencial}
         \item $\bigO(n!)$ que es \textit{factorial}
     \end{itemize}
+\end{frame}
+
+\section{Análisis Práctico}
+
+\begin{frame}{Reglas de dedo para análisis de algoritmos}{Análisis Práctico}
+
+    El uso del \textbf{orden asintótico} nos ayuda a simplificar el análisis de complejidad de los algoritmos. \pause
+
+    \bigskip
+
+    Para hacerlo más \textit{sencillo}, lo que suele hacerse es usar la notación de $\bigO$ debido a que es la que agrega un \textbf{límite superior}, quitando coeficientes y quedándonos con alguno de los órdenes comunes: \pause
+
+    \bigskip
+
+    \begin{center}
+        \huge
+        \textit{En el peor de los casos, este algoritmo será, a lo mucho, igual de tardado que este otro}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Instrucciones secuenciales}{Análisis Práctico}
+    
+    \begin{columns}
+        \begin{column}{0.35\textwidth}
+            \begin{center}
+                \includegraphics[width=0.75\textwidth]{sequential-times.pdf}
+            \end{center}
+        \end{column}
+        \begin{column}{0.65\textwidth}
+            \hspace{-1in}
+            \begin{itemize}
+                \item \textbf{Complejidad exacta}: $\Theta(\sum T_i)$
+                \item \textbf{Complejidad asintótica}: $\bigO(\max(T_i))$
+            \end{itemize}
+
+            \bigskip
+
+            Por ejemplo, una secuencia de 4 instrucciones donde:
+            \begin{itemize}
+                \item $T_1 = \bigO(n)$
+                \item $T_2 = \bigO(\log n)$
+                \item $T_3 = \alert{\bigO(n^2)}$
+                \item $T_4 = \alert{\Theta(2n^2 + 3)}$
+            \end{itemize}
+
+            \bigskip
+
+            tendrá entonces una complejidad de $T = \alert{\bigO(n^2)}$
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Decisiones}{Análisis Práctico}
+    
+    \begin{columns}
+        \begin{column}{0.35\textwidth}
+            \begin{center}
+                \includegraphics[width=0.85\textwidth]{decision-times.pdf}
+            \end{center}
+        \end{column}
+        \begin{column}{0.65\textwidth}
+            \hspace{-1in}
+            \begin{itemize}
+                \item \textbf{Complejidad promedio}: $\text{avg} (T_1, T_2)$
+                \item \textbf{Complejidad asintótica}: $\bigO(\max(T_1, T_2))$
+            \end{itemize}
+
+            \bigskip
+
+            Por ejemplo, una decisión con 2 ramas de instrucciones donde:
+
+            \begin{itemize}
+                \item $T_1 = \bigO(\log n)$
+                \item $T_2 = \alert{\bigO(n \log n)}$
+            \end{itemize}
+
+            \bigskip
+
+            tendrá entonces una complejidad de $T = \alert{\bigO(n \log n)}$
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Ciclos}{Análisis Práctico}
+    
+    \begin{columns}
+        \begin{column}{0.35\textwidth}
+            \begin{center}
+                \includegraphics[width=0.95\textwidth]{loop-times.pdf}
+            \end{center}
+        \end{column}
+        \begin{column}{0.65\textwidth}
+            \hspace{-1in}
+            \begin{itemize}
+                \item \textbf{Complejidad exacta}: $\Theta(m T_1)$
+                \item \textbf{Complejidad asintótica}: \alert{depende}
+            \end{itemize}
+
+            \bigskip
+
+            Por ejemplo, asumiendo que $T_1 = \Theta(n)$:
+            
+            \begin{itemize}
+                \item Si $m << n$ entonces $T = \alert{\bigO(n)}$
+                \item Si $m \approx n$ entonces $T = \alert{\bigO(n^2)}$
+            \end{itemize}
+
+            Es muy importante considerar que la notación $\bigO$ elimina coeficientes, por lo que a veces no podemos ignorar el tamaño de $m$ si $m \not \ll n$.
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\section{Análisis de algoritmos recursivos}
+
+\begin{frame}{Divide \& Conquer}{Análisis de algoritmos recursivos}
+
+    En el estudio de algoritmos, \alert{divide and conquer} hace referencia a una técnica de diseño que se enfoca en \textbf{partir} un problema en \textbf{problemas más pequeños}: \pause
+
+    \bigskip
+
+    \begin{itemize}[<+->]
+        \itemsep2.5ex
+        \item La idea es juntar las soluciones de cada \textit{subproblema} y obtener así la solución total del problema original
+        \item Esta técnica es muy eficiente cuando se utiliza \textbf{recursión}
+        \item La implementación de algoritmos diseñados con esta técnica es ideal para resolverse de manera \textit{paralela}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Máximo y mínimo de un conjunto}{Análisis de algoritmos recursivos}
+
+    \begin{center}
+        \huge
+        ¿Cuál es la primera idea que viene a tu mente si queremos obtener tanto el máximo como el mínimo de un conjunto?
+    \end{center}
+    
+\end{frame}
+
+\begin{frame}{Análisis del enfoque de Divide \& Conquer}{Análisis de algoritmos recursivos}
+    Con una entrada de $n = 2^k$, y considerando que cada \textit{vuelta} \textbf{divides en 2 partes de la mitad del tamaño}, y que en cada vuelta haces \textbf{una} comparación entre \textbf{dos elementos}, entonces: \pause
+    \begin{align*}
+        T(n) & = 2T\left(\frac{n}{2}\right) + 2  & \tag{$k = 1$}\\ \pause
+             & = 2\left(T\left(\frac{\frac{n}{2}}{2}\right) + 2\right) + 2  & \tag{$k = 2$}\\ \pause
+             & = 4T\left(\frac{n}{4}\right) + 4 + 2 & \tag{\text{desarrollando}} \\ \pause
+             & = 2^2 T\left(\frac{n}{2^2}\right) + 2^2 + 2^1 & \tag{\text{sustituye por }$2^i$} \\ \pause
+             & = 2\left(2^2 T\left(\frac{\frac{n}{2^2}}{2}\right) + 2^2  + 2 \right) + 2 & \tag{$k = 3$} \\ \pause
+             & = 2^3 T\left(\frac{n}{2^3}\right) + 2^3 + 2^2 + 2 & \tag{\text{desarrolla \& sustituye}} %partir aquí
+    \end{align*}
+\end{frame}
+
+\begin{frame}{Análisis del enfoque de Divide \& Conquer}{Análisis de algoritmos recursivos}
+    \begin{align*}
+        & = 2^3 T\left(\frac{n}{2^3}\right) + 2^3 + 2^2 + 2 & \tag{\text{cont.}} \\ 
+        & \vdots \\
+        & = 2^{k-1} T\left(\frac{n}{2^{k-1}}\right) + {\color{blue} 2^{k-1} + 2^{k-2} + \dots + 2^2 + 2^1} & \tag{\text{tras } $k-1$ \text{ pasos}}
+    \end{align*}
+
+    Y considerando que $n = 2^k$, sabemos que $2^{k-1} = \frac{n}{2}$ así que podemos sustituirlo en la ecuación.    
+    Del mismo modo, podemos sustituir la parte en {\color{blue} azul} por la sumatoria
+    $$\color{blue} \sum\limits_{i=0}^n x^i = \frac{x^{n+1} - 1}{x - 1}$$
+    donde $x = 2$ y $n = k-1$. Es importante notar que la sumatoria va desde $0$ hasta $n$. 
+    En nuestro caso, empezamos desde $k=1$ en adelante, por lo que hay que restarle el primer término: $2^0 = 1$.
+\end{frame}
+
+\begin{frame}{Análisis del enfoque de Divide \& Conquer}{Análisis de algoritmos recursivos}
+    Reemplazando entonces la sumatoria, $n$ por $2^k$, tenemos
+
+    \begin{align*}
+    & = 2^{k-1} T\left(\frac{2^k}{2^{k-1}}\right) + {\color{blue} \frac{2^k - 1}{2 - 1} - 1} & \tag{\text{sust.}} \\[1.5ex]
+    & = \frac{n}{2}T(2) + \frac{n - 1}{1} - 1 & \tag{\text{sust.}} \\[1.5ex]
+    & = \frac{n}{2}(1) + n - 2 & \tag{sust.} \\[1.5ex]
+    & = \frac{n}{2} + {\color{red} n} - 2
+    \end{align*}
+
+    $$\quad \therefore \quad T(n) = {\color{red}\bigO(n)}$$
+
+\end{frame}
+
+\begin{frame}[plain]
+    \begin{center}
+        \Huge
+        Es un show.
+    \end{center}
+\end{frame}
+
+\begin{frame}{Teorema Maestro}{Análisis de algoritmos recursivos}
+    Existe una manera más sencilla de darse cuenta desde el principio dado el tipo de recurrencia.
+    
+    \bigskip
+
+    Supongamos que $n = c^k$ y $c > 1$. Entonces
+    $$T(n) = \begin{cases}
+        b & \text{si } n = 1 \\
+        aT\left( \frac{n}{c} \right) + bn^x & \text{si } n > 1
+    \end{cases}$$
+
+    \begin{itemize}
+        \item $a$ es el \alert{número} de \textbf{subproblemas}
+        \item $\frac{n}{c}$ es el \alert{tamaño} de los \textbf{subproblemas}
+        \item $bn^x$ es el costo de la \alert{operación} realizada en \alert{cada vuelta} (como partir o unir, comparar, sumar, multiplicar\dots)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Teorema Maestro}{Análisis de algoritmos recursivos}
+    \begin{theorem}
+        Sabiendo que $n = c^k$ y $c > 1$, y 
+        $$T(n) =
+        \begin{cases}
+            b & \text{si } n = 1 \\
+            aT\left( \frac{n}{c} \right) + bn^x & \text{si } n > 1
+        \end{cases}$$
+        entonces
+        $$T(n) =
+        \begin{cases}
+            \Theta (n^{\log_c a}) & \text{si } a > c^x \\
+            \Theta (n^x \log_c n) & \text{si } a = c^x \\
+            \Theta (n^x) & \text{si } a < c^x
+        \end{cases} $$
+    \end{theorem}
+\end{frame}
+
+\begin{frame}{Propiedades de Logaritmos}{Equivalencias útiles}
+    \begin{enumerate}
+        \itemsep2.5ex
+        \item $\log_b 1 = 0$
+        \item $\log_b b^a = a$
+        \item $\log_b xy = \log_b x + \log_b y$
+        \item $\log_b \dfrac{x}{y} = \log_b x - \log_b y$
+        \item $\log_b x^a = a \log_b x$
+        \item $x^{\log_b y} = y^{\log_b x}$
+        \item $\log_c x = \dfrac{\log_b x}{\log_b c} = (\log_c x)(\log_b c)$
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Equivalencias en sumatorias y series}{Equivalencias}
+    \begin{enumerate}
+        \item $\displaystyle \sum_{i = 1}^n 1 = n$
+        \item $\displaystyle \sum_{i = 1}^n i = \frac{n(n+1)}{2}$
+        \item $\displaystyle \sum_{i=0}^n x^i = \frac{x^{n+1} - 1}{x - 1}$
+        \item $\displaystyle \sum_{i=1}^n \frac{1}{i} = \ln n$
+        \item $\displaystyle \sum_{i=1}^n ix^i = \frac{(n-1)x^{n+1} - nx^n + x}{(x-1)^2}$
+        \item $\displaystyle \sum_{i=1}^n i^2 = \frac{n(n+1)(2n + 1)}{6}$
+    \end{enumerate}
+
 \end{frame}
 
 % \section*{Referencias}
