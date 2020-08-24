@@ -425,7 +425,7 @@ Podemos usar la misma idea para expresar también su \textbf{complejidad espacia
     Con una entrada de $n = 2^k$, y considerando que cada \textit{vuelta} \textbf{divides en 2 partes de la mitad del tamaño}, y que en cada vuelta haces \textbf{una} comparación entre \textbf{dos elementos}, entonces: \pause
     \begin{align*}
         T(n) & = 2T\left(\frac{n}{2}\right) + 2  & \tag{$k = 1$}\\ \pause
-             & = 2\left(T\left(\frac{\frac{n}{2}}{2}\right) + 2\right) + 2  & \tag{$k = 2$}\\ \pause
+             & = 2\left(2T\left(\frac{\frac{n}{2}}{2}\right) + 2\right) + 2  & \tag{$k = 2$}\\ \pause
              & = 4T\left(\frac{n}{4}\right) + 4 + 2 & \tag{\text{desarrollando}} \\ \pause
              & = 2^2 T\left(\frac{n}{2^2}\right) + 2^2 + 2^1 & \tag{\text{sustituye por }$2^i$} \\ \pause
              & = 2\left(2^2 T\left(\frac{\frac{n}{2^2}}{2}\right) + 2^2  + 2 \right) + 2 & \tag{$k = 3$} \\ \pause
