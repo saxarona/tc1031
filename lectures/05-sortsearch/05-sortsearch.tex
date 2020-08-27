@@ -1,0 +1,533 @@
+\documentclass[spanish, c]{beamer}
+
+\usepackage[utf8]{inputenc}
+% \usepackage[spanish, mexico]{babel}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage{ragged2e}
+\usepackage{mathrsfs}
+% \usepackage{csquotes}
+% \usepackage{listings}
+\usepackage[scaled]{beramono}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{physics}
+\usepackage{minted}
+\usepackage{tcolorbox}
+\usepackage{tikz}
+\usepackage{relsize}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage[shortlabels]{enumitem}
+\usepackage{pifont}
+
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+\setlist[itemize]{label=\textbullet}  % global enumitem for default itemize
+
+\tcbuselibrary{minted, skins}
+
+\usetikzlibrary{arrows, automata, positioning, fit, shapes.geometric, backgrounds}
+  
+  \tikzset{
+    stylename/.style={
+      ->, %arrow type
+      >=stealth', %arrow head type (bold)
+      shorten >=1pt, 
+      auto,
+      %semithick,
+      initial text=$ $, %no start text
+    }
+  }
+
+\renewcommand{\indent}{\hspace*{2em}}
+
+\newcommand\CC{C\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\relsize{-3}{\textbf{++}}}~}
+\newcommand{\bigO}{\mathcal{O}}
+
+\renewcommand{\Comment}[2][.55\linewidth]{%
+  \leavevmode\hfill\makebox[#1][l]{\fontfamily{cmss}\selectfont\color{red}\footnotesize$\longrightarrow$\quad#2}}
+% \usepackage{tikz}
+
+% \usetikzlibrary{fit, shapes, arrows}
+
+% \usepackage{courier}
+% \usepackage{subfigure}
+% \usepackage{enumerate}
+% \usepackage{algorithmic}
+% \usepackage{algorithm}
+
+% \usepackage{listings}
+% \usepackage{lstlinebgrd}
+
+\usetheme{Boadilla}
+\usefonttheme[onlymath]{serif}
+
+\newcommand\blfootnote[1]{%
+\begingroup
+\renewcommand\thefootnote{}\footnote{#1}%
+\addtocounter{footnote}{-1}%
+\endgroup
+}
+
+\algrenewcommand\alglinenumber[1]{\footnotesize #1}
+
+\makeatletter
+% start with some helper code
+% This is the vertical rule that is inserted
+\newcommand*{\algrule}[1][\algorithmicindent]{%
+  \makebox[#1][l]{%
+    \hspace*{.2em}% <------------- This is where the rule starts from
+    \vrule height .75\baselineskip depth .25\baselineskip
+  }
+}
+
+\newcount\ALG@printindent@tempcnta
+\def\ALG@printindent{%
+    \ifnum \theALG@nested>0% is there anything to print
+    \ifx\ALG@text\ALG@x@notext% is this an end group without any text?
+    % do nothing
+    \else
+    \unskip
+    % draw a rule for each indent level
+    \ALG@printindent@tempcnta=1
+    \loop
+    \algrule[\csname ALG@ind@\the\ALG@printindent@tempcnta\endcsname]%
+    \advance \ALG@printindent@tempcnta 1
+    \ifnum \ALG@printindent@tempcnta<\numexpr\theALG@nested+1\relax
+    \repeat
+    \fi
+    \fi
+}
+% the following line injects our new indent handling code in place of the default spacing
+\patchcmd{\ALG@doentity}{\noindent\hskip\ALG@tlm}{\ALG@printindent}{}{\errmessage{failed to patch}}
+\patchcmd{\ALG@doentity}{\item[]\nointerlineskip}{}{}{} % no spurious vertical space
+% end vertical rule patch for algorithmicx
+\makeatother
+%
+
+% Sets the templates
+\definecolor{navyblue}{RGB}{0, 0, 128}
+\definecolor{crimson}{RGB}{128, 16, 0}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{headline}{}
+\setbeamertemplate{title page}[default][colsep=-4bp,rounded=true]
+\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{bibliography item}[text]
+\setbeamertemplate{theorems}[numbered]
+
+\setbeamercolor{title}{fg=navyblue, bg=white}
+\setbeamercolor{frametitle}{fg=navyblue, bg=white}
+\setbeamercolor{structure}{fg=navyblue}
+\setbeamercolor{button}{fg=white,bg=navyblue}
+
+\setbeamercovered{transparent}
+
+\tcbset{cppexample/.style={%
+    colback=green!5,
+    colframe=green!30!black,
+    listing only,
+    fonttitle=\bfseries,
+    listing engine=minted,
+    minted language=c++,
+    enhanced,
+    overlay={\begin{tcbclipinterior}\fill[red!25!green!25!white] (frame.south west)rectangle ([xshift=4mm]frame.north west);\end{tcbclipinterior}}
+}}
+
+\tcbset{cppfullexample/.style={%
+    % colback=green!5,
+    % colframe=green!30!black,
+    listing only,
+    fonttitle=\bfseries,
+    listing engine=minted,
+    minted language=c++,
+    enhanced,
+    overlay={\begin{tcbclipinterior}\fill[black!20!white] (frame.south west)rectangle ([xshift=4mm]frame.north west);\end{tcbclipinterior}}
+}}
+
+\tcbset{cppfullborderless/.style={%
+    % colback=green!5,
+    % colframe=green!30!black,
+    listing only,
+    listing engine=minted,
+    minted language=c++,
+    enhanced,
+    overlay={\begin{tcbclipinterior}\fill[black!20!white] (frame.south west)rectangle ([xshift=4mm]frame.north west);\end{tcbclipinterior}}
+}}
+
+\title{Búsqueda y ordenamiento}
+\subtitle{Programación de Estructuras de Datos y Algoritmos Fundamentales \\ (TC1031)}
+\author{
+    \texorpdfstring{
+        \begin{center}
+            M.C. Xavier Sánchez Díaz \\
+            \href{mailto:sax@tec.mx}{\texttt{sax@tec.mx}}
+        \end{center}
+    }
+    {M.C. Xavier Sánchez Díaz}
+}
+
+\institute[Tecnológico de Monterrey]{\includegraphics[scale=0.5]{../img/logo}}
+\date{}
+
+\begin{document}
+
+\setlength{\rightskip}{0pt}
+
+\begin{frame}[plain]
+    \titlepage        
+\end{frame}
+
+\begin{frame}{Outline}
+    \tableofcontents
+\end{frame}
+
+\section{Sorting}
+\subsection{Introducción}
+
+\begin{frame}{Ordenando números}{Introducción}
+
+    El problema de \alert{ordenar} una secuencia de números es un problema $\mathcal{P}$ ya que\dots
+
+    \begin{enumerate}[1)] \pause
+        \itemsep2.5ex
+        \item \textbf{Es fácil de resolver}: tras un número determinado de pasos, la secuencia de números estará ordenada. \pause
+        \item \textbf{Es fácil de verificar}: podemos revisar \textit{rápidamente} que la secuencia ya está en el orden correcto. \pause
+    \end{enumerate}
+
+    \bigskip
+
+    Revisaremos distintos enfoques para hacerlo en estas \textit{slides}.
+\end{frame}
+
+\begin{frame}{Antes de comenzar{\dots}}{Introducción}
+
+    El problema de \textbf{ordenamiento} ha sido ampliamente estudiado en ciencias computacionales, pues es \alert{más sencillo buscar} en una secuencia que \textbf{ya está ordenada} que en una lista sin ordenar (por ejemplo en un directorio telefónico o un diccionario). \pause
+
+    \bigskip
+
+    El problema de ordenamiento se ha resuelto de varias maneras y con múltiples algoritmos; es de los \textit{problemas favoritos} en entrevistas de trabajo de \textit{pizarrón}.\footnote{Generalmente mal vista por la ansiedad que genera en algunas personas.} \pause
+
+    \bigskip
+
+    Existe un \textit{límite inferior} de complejidad del problema probado teóricamente: $\bigO(n \log n)$
+\end{frame}
+
+\begin{frame}{Límite inferior (de un problema)}{Introducción}
+
+    El \alert{límite inferior de complejidad} de \textbf{un problema} se refiere a la \textbf{cantidad mínima de operaciones necesarias} para poder resolverlo. \pause
+
+    \bigskip
+
+    \begin{center}
+        \Large \textit{AL MENOS debes hacer esto para poder resolverlo.}
+    \end{center} \pause
+
+    \bigskip
+
+    Esto es el \textbf{límite inferior} de \textbf{un problema}.
+\end{frame}
+
+\begin{frame}{Límite superior (de un algoritmo)}{Introducción}
+
+    El \alert{límite superior de tiempo de ejecución} de \textbf{un algoritmo} se refiere a la \textbf{cantidad máxima de operaciones hechas} por un algoritmo al resolver un problema. \pause
+
+    \bigskip
+
+    \begin{center}
+        \Large \textit{A LO MUCHO mi método hace esto para resolver el problema.}
+    \end{center} \pause
+
+    \bigskip
+
+    Esto es el \textbf{límite superior} de un \textbf{algoritmo}.
+\end{frame}
+
+\begin{frame}{Eficiencia}{Introducción}
+    Un \textbf{algoritmo} es \alert{óptimo} si el \textbf{límite superior de su tiempo de ejecución} es \alert{igual} al \textbf{límite inferior de la complejidad del problema} que resuelve. \pause
+
+    \bigskip
+
+    \begin{center}
+        \Large
+        \textit{Para resolver mi problema, A LO MENOS debo hacer esto.}\\ \pause
+        \textit{Mi algoritmo hace, A LO MUCHO eso mínimo que debo hacer.}\\ \pause
+        \textit{Eso significa que mi algoritmo es eficiente.} \pause
+    \end{center}
+
+    \bigskip
+
+    El límite inferior de la \textbf{complejidad del problema de ordenar} es $$\bigO(n \log n)$$
+\end{frame}
+
+\section{Ordenamiento (ineficiente horrible)}
+
+\begin{frame}{¿Por qué estudiarlo?}{Ordenamiento (ineficiente horrible)}
+
+    Si es ineficiente, ¿entonces por qué estudiarlo? \pause
+
+    \bigskip
+
+    \begin{enumerate}[1)]
+        \itemsep3.5ex
+        \item Por razones históricas \pause
+        \item Para reforzar la programación \pause
+        \item Para reforzar el análisis del tiempo de ejecución
+    \end{enumerate}
+\end{frame}
+
+\subsection{Swap-sort}
+
+\begin{frame}{Intercambio (Swap Sort)}{Ordenamiento (ineficiente horrible)}
+
+    El \textit{sorting} por \alert{intercambio} o \textit{swap} se basa en leer el vector a ordenar de manera secuencial:
+
+    \begin{enumerate}[a)]
+        \item Compara el primer elemento con cada uno de los demás \pause
+        \item Si encuentra uno más pequeño, entonces los cambia de lugar (\textbf{swap}) \pause
+    \end{enumerate}
+
+    \bigskip
+
+    Es decir que si tengo un vector de $n$ elementos: \pause
+
+    \begin{enumerate}[1.]
+        \item Hará $n-1$ vueltas \pause
+        \item En cada una de esas vueltas, hará a lo mucho $n-1$ \textbf{swaps} \pause
+    \end{enumerate}
+
+    \bigskip
+
+    es decir
+    {\Large $$\bigO(n^2)$$}
+\end{frame}
+
+% \begin{frame}{Swap Sort}{Ordenamiento (ineficiente horrible)}
+
+%     \begin{algorithmic}[0]
+%         \Require a vector $A$
+%         \Procedure{swapSort}{$A$}
+%         \State $n \gets $ \Call{A.size}{ }
+%         \State $aux \gets 0$;
+%         \For{$i = 0$; $i < \alert{n-2}$; $i++$}
+%             \For{$j = i+1$; $j < \alert{n-1}$; $j++$}
+%                 \If {$A[i] > A[j]$}
+%                     \State $aux \gets A[i]$;
+%                     \State $A[i] \gets A[j]$;
+%                     \State $A[j] \gets aux$;
+%                 \EndIf
+%             \EndFor
+%         \EndFor
+%         \EndProcedure
+%     \end{algorithmic}
+%     {\footnotesize Son 2 \textbf{for}s donde el más grande va desde 0 hasta \textit{casi} $n$, entonces \alert{$\bigO(n^2)$} en el peor de los casos.}
+
+% \end{frame}
+
+\newtcbinputlisting{\SwapSort}[3][]{%
+    listing engine=minted,    
+    minted options = {#3},
+    cppfullborderless,
+    listing file={#2}
+}
+
+\begin{frame}[fragile]{Swap Sort}{Ordenamiento (ineficiente horrible)}
+    \SwapSort{sorting.cpp}{fontsize=\scriptsize, breaklines, linenos, autogobble, numbersep=2mm, firstline=2, lastline=19}
+\end{frame}
+
+\subsection{Bubble Sort}
+
+\begin{frame}{Burbuja (Bubble Sort)}
+
+    El \textit{sorting} por \alert{burbuja} o \textit{bubble} se basa en comparar pares de elementos de manera secuencial:
+
+    \bigskip
+
+    \begin{enumerate}[a)]
+        \item Compara los primeros dos y los pone en el orden correcto \pause
+        \item Después compara los siguientes dos, y los pone en el orden correcto\dots \pause
+        \item Al terminar, el más grande estará al final del vector \pause
+        \item Ahora hay que repetir el proceso hasta que ya no haya intercambios
+    \end{enumerate}
+    \bigskip  \pause
+
+    Es decir que si tengo un vector de $n$ elementos: \pause
+
+    \begin{enumerate}[1.]
+        \item Hará en el peor de los casos $n-1$ \textbf{swaps} para el primer elemento \pause
+        \item Esto podría repetirse para los $n-1$ elementos que no se han acomodado (si la lista viene en el orden inverso) \pause
+    \end{enumerate}
+    \bigskip
+    es decir
+    {\Large $$\bigO(n^2)$$}
+\end{frame}
+
+\newtcbinputlisting{\BubbleSort}[3][]{%
+    listing engine=minted,    
+    minted options = {#3},
+    cppfullborderless,
+    listing file={#2}
+}
+
+\begin{frame}{Bubble Sort}{Ordenamiento (ineficiente horrible)}
+\BubbleSort{sorting.cpp}{fontsize=\tiny, breaklines, linenos, autogobble, numbersep=2mm, firstline=23, lastline=48}
+
+\end{frame}
+
+\subsection{Selection Sort}
+
+\begin{frame}{Selección Directa (Selection Sort)}{Ordenamiento (ineficiente horrible)}
+    El \textit{sorting} por \alert{selección directa} va llenando posiciones buscando de un extremo a otro:
+
+    \begin{enumerate}[a)]
+        \item Leo todos los números y me quedo con el más chico \pause
+        \item Pongo el más chico al principio \pause
+        \item Repito lo mismo con todos, menos con el primero (que ya acomodé) \dots \pause
+    \end{enumerate}
+
+    \bigskip
+
+    Es decir que si tengo un vector de $n$ elementos: \pause
+
+    \begin{enumerate}[1.]
+        \item Hará $n-1$ comparaciones mientras busca el menor \pause
+        \item Y SIEMPRE buscará $n-1$ veces \pause
+    \end{enumerate}
+
+    \bigskip
+
+    es decir
+    {\Large $$\bigO(n^2)$$}
+\end{frame}
+
+\newtcbinputlisting{\SelectionSort}[3][]{%
+    listing engine=minted,    
+    minted options = {#3},
+    cppfullborderless,
+    listing file={#2}
+}
+
+\begin{frame}{Selection Sort}{Ordenamiento (ineficiente horrible)}
+\SelectionSort{sorting.cpp}{fontsize=\scriptsize, breaklines, linenos, autogobble, numbersep=2mm, firstline=50, lastline=69}
+\end{frame}
+
+\subsection{Insertion Sort}
+
+\begin{frame}{Inserción (Insertion Sort)}{Ordenamiento (ineficiente horrible)}
+    El \textit{sorting} por \alert{inserción} o \textit{insertion} se basa en insertar los elementos del vector de la parte \textit{no ordenada} a la parte ya \textit{ordenada}. Similar a como ordenamos alfabéticamente:
+
+    \bigskip
+
+    \begin{enumerate}[a)]
+        \item Ponle que el primer elemento es parte de lo ordenado \pause
+        \item El segundo, ¿va antes o después del primero? \dots \pause
+        \item Y luego para cada elemento $i$ se va insertando en el lugar correcto $A[i]$
+    \end{enumerate}
+    \bigskip  \pause
+
+    Es decir que si tengo un vector de $n$ elementos: \pause
+
+    \begin{enumerate}[1.]
+        \item Hará en el peor de los casos $n-1$ \textbf{inserciones} \pause
+        \item Y cada inserción revisa, a lo mucho, $n-2$  posiciones posibles\pause
+    \end{enumerate}
+    \bigskip
+    es decir
+    {\Large $$\bigO(n^2)$$}
+\end{frame}
+
+\newtcbinputlisting{\InsertionSort}[3][]{%
+    listing engine=minted,    
+    minted options = {#3},
+    cppfullborderless,
+    listing file={#2}
+}
+
+\begin{frame}{Insertion Sort}{Ordenamiento (ineficiente horrible)}
+    \InsertionSort{sorting.cpp}{fontsize=\scriptsize, breaklines, linenos, autogobble, numbersep=2mm, firstline=71, lastline=85}
+\end{frame}
+
+\section{Búsquedas}
+
+\subsection{Introducción}
+
+\begin{frame}{Búsqueda}{Búsquedas}
+    El problema de \alert{búsqueda} (en contenedor unidimensional) es un problema $\mathcal{P}$ ya que\dots \pause
+
+    \begin{enumerate}[1)]
+        \itemsep2.5ex
+        \item \textbf{Es fácil de resolver}: en el peor de los casos, buscamos todo el contenedor hasta el final ($\bigO(n)$)\footnote{Hay maneras más eficientes de hacerlo} \pause
+        \item \textbf{Es fácil de verificar}: si nos dan la posición de lo que estamos buscando, podemos revisar \textit{rápidamente} si realmente contiene lo que buscamos.
+    \end{enumerate}
+\end{frame}
+
+\subsection{Búsqueda secuencial}
+
+\begin{frame}{Búsqueda secuencial}{Búsquedas}
+    En la \alert{búsqueda secuencial} iremos de uno por uno en el contenedor hasta encontrar el elemento que estamos buscando (si existe). Si lo encontramos, informaremos de su posición. \pause
+
+    \bigskip
+
+    \begin{itemize}
+        \itemsep2.5ex
+        \item En términos técnicos, suele hacerse la comparación de buscar \textit{una aguja en un pajar} \pause
+        \item La aguja (\textit{needle}) es el \textbf{elemento} a buscar \pause
+        \item El pajar (\textit{haystack}) es el \textbf{contenedor} en el que se realiza la búsqueda
+    \end{itemize}
+
+    \bigskip  \pause
+
+    No hay manera de acortar la búsqueda ya que no sabemos si el elemento existe en la parte no revisada hasta llegar al final. Por eso en el peor de los casos exploramos todo el contenedor, es decir que su complejidad es lineal:
+
+    $$\bigO(n)$$
+\end{frame}
+
+\newtcbinputlisting{\BinarySearch}[3][]{%
+    listing engine=minted,    
+    minted options = {#3},
+    cppfullborderless,
+    listing file={#2}
+}
+
+\begin{frame}{Búsqueda Binaria}{Búsquedas}
+
+    La \alert{búsqueda binaria} o \textit{binary search} consiste en buscar más eficientemente si sabemos que el contenedor ya está ordenado: \pause
+
+    \bigskip
+
+    \begin{enumerate}[1)]
+        \itemsep1.2ex
+        \item Comparo contra el elemento del centro \pause
+        \item Si es el que buscaba, dame la posición central \pause
+        \item Si es más grande que el centro, busca en la mitad de arriba \pause
+        \item Si es más chico que el centro, busca en la mitad de abajo \pause
+    \end{enumerate}
+
+    De tal manera que iremos cortando en mitades, cuartos, octavos\dots
+ 
+    $$\frac{1}{2} + \frac{1}{4} + \frac{1}{8} + \dots$$ \pause
+
+    El peor de los casos es que no lo encuentres. Asumiendo que tienes 8 elementos, habrás eliminado primero 4 elementos, y luego otros 2, y luego 1 más $\therefore \quad \alert{\bigO(\log n)}$
+\end{frame}
+
+\begin{frame}{Búsqueda Binaria}
+    \BinarySearch{searching.cpp}{fontsize=\tiny, breaklines, linenos, autogobble, numbersep=2mm, firstline=1, lastline=29}
+\end{frame}
+
+% \section*{Referencias}
+
+% \begin{frame}[t]{Referencias}
+    % \nocite{bibID01}
+    % \nocite{bibID02}
+
+    % \bibliographystyle{IEEE}
+    % \bibliography{biblio}
+% \end{frame}
+
+\end{document}
