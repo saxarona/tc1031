@@ -1,0 +1,442 @@
+\documentclass[spanish, c]{beamer}
+
+\usepackage[utf8]{inputenc}
+% \usepackage[spanish, mexico]{babel}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage{ragged2e}
+\usepackage{mathrsfs}
+% \usepackage{csquotes}
+% \usepackage{listings}
+\usepackage[scaled]{beramono}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{physics}
+\usepackage{minted}
+\usepackage{tcolorbox}
+\usepackage{tikz}
+\usepackage{relsize}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage[shortlabels]{enumitem}
+\usepackage{pifont}
+
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+\setlist[itemize]{label=\textbullet}  % global enumitem for default itemize
+
+\tcbuselibrary{minted, skins}
+
+\usetikzlibrary{arrows, automata, positioning, fit, shapes.geometric, backgrounds}
+  
+  \tikzset{
+    stylename/.style={
+      ->, %arrow type
+      >=stealth', %arrow head type (bold)
+      shorten >=1pt, 
+      auto,
+      %semithick,
+      initial text=$ $, %no start text
+    }
+  }
+
+\renewcommand{\indent}{\hspace*{2em}}
+
+\newcommand\CC{C\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\relsize{-3}{\textbf{++}}}~}
+\newcommand{\bigO}{\mathcal{O}}
+
+\renewcommand{\Comment}[2][.55\linewidth]{%
+  \leavevmode\hfill\makebox[#1][l]{\fontfamily{cmss}\selectfont\color{red}\footnotesize$\longrightarrow$\quad#2}}
+% \usepackage{tikz}
+
+% \usetikzlibrary{fit, shapes, arrows}
+
+% \usepackage{courier}
+% \usepackage{subfigure}
+% \usepackage{enumerate}
+% \usepackage{algorithmic}
+% \usepackage{algorithm}
+
+% \usepackage{listings}
+% \usepackage{lstlinebgrd}
+
+\usetheme{Boadilla}
+\usefonttheme[onlymath]{serif}
+
+\newcommand\blfootnote[1]{%
+\begingroup
+\renewcommand\thefootnote{}\footnote{#1}%
+\addtocounter{footnote}{-1}%
+\endgroup
+}
+
+\algrenewcommand\alglinenumber[1]{\footnotesize #1}
+
+\makeatletter
+% start with some helper code
+% This is the vertical rule that is inserted
+\newcommand*{\algrule}[1][\algorithmicindent]{%
+  \makebox[#1][l]{%
+    \hspace*{.2em}% <------------- This is where the rule starts from
+    \vrule height .75\baselineskip depth .25\baselineskip
+  }
+}
+
+\newcount\ALG@printindent@tempcnta
+\def\ALG@printindent{%
+    \ifnum \theALG@nested>0% is there anything to print
+    \ifx\ALG@text\ALG@x@notext% is this an end group without any text?
+    % do nothing
+    \else
+    \unskip
+    % draw a rule for each indent level
+    \ALG@printindent@tempcnta=1
+    \loop
+    \algrule[\csname ALG@ind@\the\ALG@printindent@tempcnta\endcsname]%
+    \advance \ALG@printindent@tempcnta 1
+    \ifnum \ALG@printindent@tempcnta<\numexpr\theALG@nested+1\relax
+    \repeat
+    \fi
+    \fi
+}
+% the following line injects our new indent handling code in place of the default spacing
+\patchcmd{\ALG@doentity}{\noindent\hskip\ALG@tlm}{\ALG@printindent}{}{\errmessage{failed to patch}}
+\patchcmd{\ALG@doentity}{\item[]\nointerlineskip}{}{}{} % no spurious vertical space
+% end vertical rule patch for algorithmicx
+\makeatother
+%
+
+% Sets the templates
+\definecolor{navyblue}{RGB}{0, 0, 128}
+\definecolor{crimson}{RGB}{128, 16, 0}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{headline}{}
+\setbeamertemplate{title page}[default][colsep=-4bp,rounded=true]
+\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{bibliography item}[text]
+\setbeamertemplate{theorems}[numbered]
+
+\setbeamercolor{title}{fg=navyblue, bg=white}
+\setbeamercolor{frametitle}{fg=navyblue, bg=white}
+\setbeamercolor{structure}{fg=navyblue}
+\setbeamercolor{button}{fg=white,bg=navyblue}
+
+\setbeamercovered{transparent}
+
+\tcbset{cppexample/.style={%
+    colback=green!5,
+    colframe=green!30!black,
+    listing only,
+    fonttitle=\bfseries,
+    listing engine=minted,
+    minted language=c++,
+    enhanced,
+    overlay={\begin{tcbclipinterior}\fill[red!25!green!25!white] (frame.south west)rectangle ([xshift=4mm]frame.north west);\end{tcbclipinterior}}
+}}
+
+\tcbset{cppfullexample/.style={%
+    % colback=green!5,
+    % colframe=green!30!black,
+    listing only,
+    fonttitle=\bfseries,
+    listing engine=minted,
+    minted language=c++,
+    enhanced,
+    overlay={\begin{tcbclipinterior}\fill[black!20!white] (frame.south west)rectangle ([xshift=4mm]frame.north west);\end{tcbclipinterior}}
+}}
+
+\tcbset{cppfullborderless/.style={%
+    % colback=green!5,
+    % colframe=green!30!black,
+    listing only,
+    listing engine=minted,
+    minted language=c++,
+    enhanced,
+    overlay={\begin{tcbclipinterior}\fill[black!20!white] (frame.south west)rectangle ([xshift=4mm]frame.north west);\end{tcbclipinterior}}
+}}
+
+\title{Ordenamiento Recursivo y Referencias}
+\subtitle{Programación de Estructuras de Datos y Algoritmos Fundamentales \\ (TC1031)}
+\author{
+    \texorpdfstring{
+        \begin{center}
+            M.C. Xavier Sánchez Díaz \\
+            \href{mailto:sax@tec.mx}{\texttt{sax@tec.mx}}
+        \end{center}
+    }
+    {M.C. Xavier Sánchez Díaz}
+}
+
+\institute[Tecnológico de Monterrey]{\includegraphics[scale=0.5]{../img/logo}}
+\date{}
+
+\begin{document}
+
+\setlength{\rightskip}{0pt}
+
+\begin{frame}[plain]
+    \titlepage        
+\end{frame}
+
+\begin{frame}{Outline}
+    \tableofcontents
+\end{frame}
+
+\section{Sorting}
+\subsection{Review: D \& Q}
+
+\begin{frame}{La idea es insertar\dots}{Review D \& Q}
+
+    Como ya vimos, la \textbf{búsqueda binaria} (la que trabaja con el arreglo ordenado) hace un \textit{árbol} que es más rápido de buscar que si nos vamos de uno en uno en las celdas de un arreglo para encontrar lo que buscamos. \pause
+
+    \bigskip
+
+    La idea detrás del \textit{sorting} recursivo es parecida. En lugar de comparar \textit{todos contra todos los demás}, podemos comparar con menos elementos si nos basamos en el principio de la \textbf{inserción} \pause
+
+    \bigskip
+
+    \begin{enumerate}[1)]
+        \item Este elemento\dots ¿va a la derecha o a la izquierda del que ya conozco? \pause
+        \item Este elemento nuevo\dots ¿va a la derecha o a la izquierda de lo que ya conozco?
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{\dots en listas más pequeñas}{Review D \& Q}
+
+    Ahora bien, recordemos el enfoque que vimos hace unas semanas: \textit{Divide \& Conquer} o en español \textbf{Divide y Vencerás}. \pause
+
+    \bigskip
+
+    \begin{center}
+        \LARGE
+        Partamos el problema en problemas más pequeños para resolver más fácilmente cada uno de ellos, y que su reconstrucción nos ayude a resolver el problema original.
+    \end{center}
+
+\end{frame}
+
+\subsection{Merge Sort}
+
+\begin{frame}{Merge Sort}
+    
+    El \alert{merge sort} divide el contenedor de manera recursiva para tener en cada nivel un arreglo ya ordenado:
+
+    \begin{enumerate}[a)]
+        \item Divide el vector en dos vectores de la mitad del tamaño \pause
+        \item Vuelvo a partir cada mitad en otros dos\pause
+        \item $\vdots$
+        \item Cuando tenga sólo dos elementos, los pongo en el orden correcto y regreso el \textit{pedacititito} ordenado \pause
+        \item Junto todos los \textit{pedacitititos} ordenados para formar un \textit{pedacito} ordenado \pause
+        \item Junto todos los \textit{pedacitos} ordenados para formar un \textit{pedazo} ordenado \pause
+        \item $\vdots$ 
+        \item Junto las dos mitades ordenadas para formar el vector completo ordenado
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Merge Sort}
+
+    Es decir que si tengo un vector de $n$ elementos: \pause
+
+    \begin{enumerate}[1)]
+        \item Haré $\log_2 n - 1$ particiones \pause
+        \item En cada partición compararé a lo mucho con la cantidad de elementos del número de vuelta en el que esté, e.g. en la vuelta 1 compararé con $n$, en la vuelta 2 con $n/2$\dots \pause
+    \end{enumerate}
+
+    \bigskip
+
+    Es decir
+    {\Large $$\bigO(n\log n)$$}
+    Este algoritmo es \alert{óptimo} \dots \pause \textit{¿Por qué?}
+
+\end{frame}
+
+\newtcbinputlisting{\MergeSort}[3][]{%
+    listing engine=minted,
+    minted options = {#3},
+    cppfullborderless,
+    listing file={#2}
+}
+
+\begin{frame}[fragile]{Merge Sort I}
+    \MergeSort{mergeSort.cpp}{fontsize=\scriptsize, breaklines, linenos, autogobble, numbersep=2mm, firstline=5, lastline=15}
+\end{frame}
+
+\begin{frame}[fragile]{Merge Sort II}    
+    \MergeSort{mergeSort.cpp}{fontsize=\tiny, breaklines, linenos, autogobble, numbersep=2mm, firstline=17, lastline=47}
+\end{frame}
+
+\subsection{Quicksort}
+
+\begin{frame}{Quicksort}
+    
+    El \alert{quicksort} es otro método \textbf{recursivo} para ordenamiento. En este caso, se escoge un pivote y se ordena por partes: \pause
+
+    \begin{enumerate}[a)]
+        \item Parto en dos mitades y tomo algún elemento como pivote\pause
+        \item Ordeno la lista poniendo a la izquierda del pivote todo lo menor y a la derecha del pivote lo mayor\pause
+        \item Vuelvo a partir en mitades de mitades (que ya están medio arregladas con respecto al pivote), y selecciono de nuevo un pivote\dots \pause
+        \item \vdots
+        \item Cuando llego al último nivel, ya están ordenados todos los elementos
+    \end{enumerate}
+
+\end{frame}
+
+\begin{frame}{QuickSort}
+
+    Es decir que si tengo un vector de $n$ elementos: \pause
+
+    \begin{enumerate}[1)]
+        \item Haré en promedio $\log_2 n - 1$ particiones, y en el peor caso $n-1$ particiones \pause
+        \item En cada partición compararé siempre al pivote con \textbf{todos los demás} elementos\dots \pause \quad ¿Qué pasa si con una pésima suerte, mi pivote es el número más pequeño en cada vuelta? \pause
+    \end{enumerate}
+
+    \bigskip
+
+    Es decir
+    {\Large $\bigO(n^2)$ en el peor caso y $\bigO(n\log n)$ en el caso promedio.}
+
+    \bigskip
+
+    Este algoritmo también es \alert{óptimo}\footnote{} en el caso promedio.
+
+\end{frame}
+
+\newtcbinputlisting{\QuickSort}[3][]{%
+    listing engine=minted,
+    minted options = {#3},
+    cppfullborderless,
+    listing file={#2}
+}
+
+\begin{frame}[fragile]{Quicksort I}
+    \QuickSort{quickSort.cpp}{fontsize=\scriptsize, breaklines, linenos, autogobble, numbersep=2mm, firstline=4, lastline=15}
+\end{frame}
+
+\begin{frame}[fragile]{Quicksort II}
+    \QuickSort{quickSort.cpp}{fontsize=\scriptsize, breaklines, linenos, autogobble, numbersep=2mm, firstline=17, lastline=36}
+\end{frame}
+
+\section{Funciones y Procedimientos}
+
+\begin{frame}{Funciones y procedimientos}{Definición y diferencias}
+
+    En programación hablamos comúnmente de \textit{la función} \texttt{print} o ``es una \textit{función} que ordena una lista de números''\dots \pause
+
+    \bigskip
+
+    En realidad, muchas veces nos referimos a un \textbf{procedimiento} en lugar de una \textbf{función}. \pause
+
+    \bigskip
+
+    \begin{itemize}
+        \itemsep2.5ex
+        \item Una \alert{función} \textbf{asocia} entradas con salidas---recibe argumentos y \textbf{devuelve} un resultado. \pause
+        \item Un \alert{procedimiento} simplemente es una secuencia de instrucciones para resolver un problema. \pause
+    \end{itemize}    
+
+\end{frame}
+
+\begin{frame}{¿Por qué es importante entender la diferencia?}{Funciones y procedimientos}
+
+    La principal diferencia entre ellas es que la función tiene un \alert{valor de retorno} y el procedimiento no: \pause
+
+    \bigskip
+
+    \begin{itemize}
+        \item \textbf{Imprimir todos los contenidos de un vector}. Los imprimes y ya. \pause
+        \item \textbf{Multiplicar dos matrices}. NECESITAS el resultado (para guardarlo en algún lugar, por ejemplo). \pause
+        \item \textbf{Pausa el sistema por 20 segundos}. No necesitas resultado. \pause
+        \item \textbf{Ordena una lista de números}. Necesitas un resultado. O lo ordenas y ya\dots \pause
+    \end{itemize}
+
+    \bigskip
+
+    Es poco común tener \textbf{procedimientos}. Lo que se acostumbra a hacer en esos casos es devolver $0$ si todo salió correcto, o $-1$ si hubo algún error.
+
+\end{frame}
+
+\subsection{Function e Inplace Functions}
+\begin{frame}{Functions e Inplace Functions}{Definiciones y diferencias}
+
+    Ya vimos que una función me devuelve un resultado. Sin embargo, existen algunas funciones (como la del caso de ordenar una lista) en donde no está muy claro si lo que se desea hacer necesito hacerlo en un lugar \textit{aparte} o ahí en el \textit{mismo contenedor}. \pause
+
+    \bigskip
+
+    Este tipo de funciones que operan en \textbf{mismo lugar} al que hacen \textit{referencia} se les llama \alert{funciones \textit{inplace}}. \pause
+
+    \bigskip
+
+    Su principal uso es para ahorrar memoria, cuando se trabaja en ambientes que necesitan ser optimizados por limitaciones de espacio o si estamos trabajando con contenedores gigantescos que no podamos copiar completamente en RAM.
+
+\end{frame}
+
+\subsection{Scopes y variables}
+\begin{frame}{Scopes y Variables}{Más definiciones}
+    Específicamente en C++ las variables que declaramos en una función \textit{viven} solamente \textbf{dentro} de esa función. Sin embargo, podemos enviarlas de distintas maneras a otras funciones para que las modifiquen: \pause
+    
+    \bigskip
+
+    \begin{description}[style=unboxed]
+        \itemsep2.5ex
+        \item [\textit{Pass by value}] \hfill \\ Cuando enviamos una variable por su \alert{valor}, se genera una \textbf{copia} en la función que la recibe y trabaja con su copia de manera local para hacer todos los cálculos. Los resultados que te envíen tienen que ser guardados en algún lugar. \pause
+        \item [\textit{Pass by reference}] \hfill \\ Cuando enviamos una variable por \alert{referencia}, la función que la recibe trabajará \textbf{directamente} sobre ella. Las modificaciones que se hagan a dicha variable continuarán incluso si el resultado no se guarda.
+    \end{description}
+
+\end{frame}
+
+\begin{frame}[fragile]{Referencias en C++}{Scopes y Variables}
+    
+    Una función simple con argumentos pasados por \textbf{valor}:
+
+    \bigskip
+
+    \begin{tcblisting}{cppexample, minted options={fontsize=\footnotesize, linenos, autogobble, numbersep=2mm}, title={Pass by value}}
+        int addTwo(int x){
+            return x + 2;
+        }
+    \end{tcblisting}
+
+    \begin{center}
+        ¿Cuánto vale $x$ y cuánto $y$ si en el \texttt{main} la invocamos como \mintinline{cpp}{x = 5; y = addTwo(x);}?
+    \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Referencias en C++}{Scopes y Variables}
+    
+    Una función simple con argumentos pasados por \textbf{referencia}:
+
+    \bigskip
+
+    \begin{tcblisting}{cppexample, minted options={fontsize=\footnotesize, linenos, autogobble, numbersep=2mm}, title={Pass by reference}}
+        void addThreeIfOddOrOneIfEven(int &x){
+            if(x % 2 == 1){
+                x += 3;
+            }
+            else{
+                x++;
+            }
+        }
+    \end{tcblisting}
+
+    \begin{center}
+        ¿Cuánto vale $x$ si en el \texttt{main} la invocamos como \mintinline{cpp}{x = 5; addThreeIfOddOrOneIfEven(x);}?
+    \end{center}
+\end{frame}
+
+
+% \section*{Referencias}
+
+% \begin{frame}[t]{Referencias}
+    % \nocite{bibID01}
+    % \nocite{bibID02}
+
+    % \bibliographystyle{IEEE}
+    % \bibliography{biblio}
+% \end{frame}
+
+\end{document}
