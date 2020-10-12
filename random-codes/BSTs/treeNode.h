@@ -11,14 +11,11 @@
 
 class treeNode
 {
-private:
-    /* data */
+public:
     int content;
     treeNode *leftBoy;
     treeNode *rightBoy;
-public:
     treeNode(int datum);
-    ~treeNode();
 };
 
 treeNode::treeNode(int datum){
