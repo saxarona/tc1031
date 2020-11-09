@@ -4,3 +4,4 @@
 *.exe
 .vscode/
 *.listing
+*.ipynb_checkpoints/
