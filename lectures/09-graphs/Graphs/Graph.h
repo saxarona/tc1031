@@ -25,10 +25,8 @@ public:
  * @param labels 
  */
 Graph::Graph(vector<string> labels){
-    vector<string>::iterator it;
-
-    for(it=labels.begin(); it!=labels.end(); it++){
-        this->vertices.emplace_back(make_shared<Vertex>(*it));
+    for(const string it : labels){
+        this->vertices.emplace_back(make_shared<Vertex>(it));
     }
 }
 
@@ -39,7 +37,7 @@ void Graph::DFS(string label){
                    [label](shared_ptr<Vertex> x){return x->getName() == label;});
 
     if (start == this->vertices.end()){
-        //not found
+        // if not found
         cout << "There's no such label in the graph!" << endl;
     }
     else{
@@ -62,7 +60,6 @@ void Graph::DFS(string label){
             }
 
             // Add its neighbourhood to the stack
-            list<Vertex>::reverse_iterator conn;  // The iterator for the connections of a vertex
             for (const auto conn : current.lock()->connections){
                 auto in_visited = find_if(visited.begin(), visited.end(), 
                 [conn](weak_ptr<Vertex> x){return x.lock()->getName() == conn.lock()->getName();});

@@ -33,7 +33,7 @@ Vertex::Vertex(string name){
 /**
  * @brief Adds who as a connection in this vertex
  * 
- * @param who A pointer to a Vertex object
+ * @param who A weak pointer to a Vertex object
  */
 void Vertex::addConnection(weak_ptr<Vertex> who){
     this->connections.push_back(who);
