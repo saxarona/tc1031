@@ -1,6 +1,6 @@
 /**
  * @file searchTree.h
- * @author Sax (sax@tec.mx)
+ * @author Sax (mail@tec.mx)
  * @brief The Binary Search Tree Structure!
  * @version 0.1
  * @date 2020-10-13

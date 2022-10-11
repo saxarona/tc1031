@@ -1,6 +1,6 @@
 /**
  * @file myhashtable.h
- * @author Sax (sax@tec.mx)
+ * @author Sax (mail@tec.mx)
  * @brief A small hashtable to experiment
  * @version 0.1
  * @date 2020-11-22

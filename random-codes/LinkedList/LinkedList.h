@@ -1,6 +1,6 @@
 /**
  * @file LinkedList.h
- * @author Sax (sax@tec.mx)
+ * @author Sax (mail@tec.mx)
  * @brief The linked list class for my data structures lecture on linked lists!
  * @version 0.1
  * @date 2020-09-29

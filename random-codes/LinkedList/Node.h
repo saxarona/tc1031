@@ -1,6 +1,6 @@
 /**
  * @file Node.h
- * @author Sax (sax@tec.mx)
+ * @author Sax (mail@tec.mx)
  * @brief This is the Node class for my Data Structures Linked List lecture!
  * @version 0.1
  * @date 2020-09-29

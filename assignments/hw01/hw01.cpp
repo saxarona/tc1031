@@ -1,6 +1,6 @@
 /**
  * @file hw01.cpp
- * @author Sax (sax@tec.mx)
+ * @author Sax (mail@tec.mx)
  * @brief Solution of first HW.
  * @version 0.1
  * @date 2020-08-19

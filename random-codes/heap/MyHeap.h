@@ -1,6 +1,6 @@
 /**
  * @file Heap.h
- * @author Sax (sax@tec.mx)
+ * @author Sax (mail@tec.mx)
  * @brief A simple heap implementation
  * @version 0.1
  * @date 2020-10-15

@@ -1,6 +1,6 @@
 /**
  * @file trees.cpp
- * @author Sax (sax@tec.mx)
+ * @author Sax (mail@tec.mx)
  * @brief The trees example of my BST structure
  * @version 0.1
  * @date 2020-10-13

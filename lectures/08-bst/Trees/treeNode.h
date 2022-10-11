@@ -1,6 +1,6 @@
 /**
  * @file treeNode.h
- * @author Sax (sax@tec.mx)
+ * @author Sax (mail@tec.mx)
  * @brief The basic node structure of my Binary Search Tree
  * @version 0.1
  * @date 2020-10-13
